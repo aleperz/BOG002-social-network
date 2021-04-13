@@ -1,3 +1,5 @@
+import { home } from './home.js';
+
 export const routes = [
   {
     path: '#error',
@@ -13,6 +15,6 @@ export const routes = [
   },
   {
     path: '#',
-    template: '<p>Este es el home</p>',
+    template: home,
   },
 ];
