@@ -1,34 +1,37 @@
 export class Router {
   constructor(routes) {
+    window.addEventListener('hashchange', (e) => this.onRouteChange(e));
+    this.mainContainer = document.querySelector('#root');
     this.routes = routes;
     this.loadInitialRoute();
   }
 
-  loadRoute(...urlSeg) {
-    const matchedRoute = this.matchUrlToRoute(urlSeg);
-    console.log(matchedRoute);
-    const url = `/${urlSeg.join('/')}`;
-    console.log(url);
-    window.history.pushState({}, 'done', url);
-    const routerOutElem = document.getElementById('root');
-    routerOutElem.innerHTML = matchedRoute.template;
+  onRouteChange() {
+    const hashLocation = window.location.hash.substring(1);
+    this.loadRoute(hashLocation);
   }
 
   matchUrlToRoute(urlSeg) {
     const matchedRoute = this.routes.find((route) => {
-      const routePathSegs = route.path.split('/').slice(1);
+      const routePathSegs = route.path.split('#').slice(1);
       if (routePathSegs.length !== urlSeg.length) return false;
       return routePathSegs.every(
         (routePathSeg, i) => routePathSeg === urlSeg[i],
       );
     });
-    return matchedRoute;
+    return matchedRoute || this.routes[0];
+  }
+
+  loadRoute(...urlSeg) {
+    const matchedRoute = this.matchUrlToRoute(urlSeg);
+    const url = `/${matchedRoute.path}`;
+    window.history.pushState({}, 'done', url);
+    this.mainContainer.innerHTML = matchedRoute.template;
   }
 
   loadInitialRoute() {
     const pathName = window.location.pathname.split('/');
-    // console.log(pathName);
-    const pathSegs = pathName.length > 1 ? pathName.slice(1) : '';
+    const pathSegs = pathName.length > 1 ? pathName.slice(1) : '#';
     this.loadRoute(...pathSegs);
   }
 }
