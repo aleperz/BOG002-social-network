@@ -9,7 +9,11 @@ export class MainButton extends HTMLElement {
   }
 
   attributeChangedCallback(atrr, oldValue, newValue) {
-    this.class = newValue;
+    if (atrr === 'class') {
+      this.class = newValue;
+    } if (atrr === 'idx') {
+      this.idx = newValue;
+    }
   }
 
   getTemplate() {
@@ -17,13 +21,12 @@ export class MainButton extends HTMLElement {
     template.innerHTML = `
     <button class="${this.class}">
     <slot name='title'></slot>
-    </button> 
-    ${this.getStyles()}`;
+    </button>
+    ${MainButton.getStyles()}`;
     return template;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getStyles() {
+  static getStyles() {
     return `
     <style>
         .primary{
@@ -45,7 +48,12 @@ export class MainButton extends HTMLElement {
   }
 
   render() {
+    // this.shadowRoot.firstElementChild.addEventListener('click', this.idx);
+    // console.log(this.shadowRoot.firstElementChild);
     this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
+    console.log(this.shadowRoot.firstElementChild);
+    console.log(this.getTemplate().content.cloneNode(true));
+    console.log(this.idx);
   }
 
   connectedCallback() {
