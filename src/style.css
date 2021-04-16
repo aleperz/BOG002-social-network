@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Shadows+Into+Light+Two&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --green1: #4b761f;
+  --redError: #fe0404;
+  --yellowWarm: #fbbc05;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.home-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image: url(/img/Group3.png);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+
+.head-home {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 42vw;
+  width: 100%;
+}
+
+div.head-home h1 {
+  font-family: "Shadows Into Light Two", cursive;
+  font-size: 2rem;
+  font-weight: lighter;
+  color: #fff;
+  letter-spacing: 4px;
+}
+
+div.head-home img:first-child {
+  width: 45%;
+}
+
+.btn-container-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  z-index: 10;
+  width: 100%;
+}
+
+div.btn-container-home button-view {
+  margin: 1rem 0;
+}
+
+.img-home {
+  position: absolute;
+  top: 135px;
+  right: 0;
+  z-index: 1;
+}
+
+@media screen and (min-width: 640px) {
+  .home-container {
+    flex-direction: row;
+    justify-content: space-between;
+    background-image: url(/img/fondo_desktop.png);
+  }
+
+  .img-home {
+    display: none;
+  }
+
+  .head-home {
+    margin-top: 0;
+    width: 50%;
+  }
+
+  .btn-container-home {
+    margin-bottom: 0;
+    width: 50%;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .home-container {
+    flex-direction: row;
+    justify-content: space-between;
+    background-image: url(/img/fondo_desktop.png);
+    background-size: cover;
+  }
+
+  .img-home {
+    display: none;
+  }
+
+  .head-home {
+    margin-top: 0;
+    width: 50%;
+  }
+
+  .btn-container-home {
+    margin-bottom: 0;
+    width: 50%;
+    justify-content: center;
+  }
+
+  div.head-home img:first-child {
+    width: 30%;
+  }
+}
