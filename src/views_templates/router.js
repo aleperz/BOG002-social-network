@@ -1,6 +1,6 @@
 export class Router {
   constructor(routes) {
-    window.addEventListener('hashchange', (e) => this.onRouteChange(e));
+    window.addEventListener('hashchange', () => this.onRouteChange());
     this.mainContainer = document.querySelector('#root');
     this.routes = routes;
     this.loadInitialRoute();

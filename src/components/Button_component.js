@@ -1,28 +1,31 @@
-export class MainButton extends HTMLElement {
+export class ViewButton extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({
+      mode: "open",
+    });
   }
 
   static get observedAttributes() {
-    return ['class'];
+    return ["class", "href"];
   }
 
   attributeChangedCallback(atrr, oldValue, newValue) {
-    if (atrr === 'class') {
+    if (atrr === "class") {
       this.class = newValue;
-    } if (atrr === 'idx') {
-      this.idx = newValue;
+    }
+    if (atrr === "href") {
+      this.href = newValue;
     }
   }
 
   getTemplate() {
-    const template = document.createElement('template');
+    const template = document.createElement("template");
     template.innerHTML = `
-    <button class="${this.class}">
+    <a class="${this.class}" href="${this.href}">
     <slot name='title'></slot>
-    </button>
-    ${MainButton.getStyles()}`;
+    </a>
+    ${ViewButton.getStyles()}`;
     return template;
   }
 
@@ -31,29 +34,34 @@ export class MainButton extends HTMLElement {
     <style>
         .primary{
         border-radius: 5px;
-        padding: 0.5rem 1rem;
+        padding: 0.6rem 0;
         background: #4B761F;
         border: none;
         color:white;
+        text-decoration: none;
+        width: 16rem;
+        display: inline-block;
+        text-align: center;
+        font-size: 1.2rem;
         }   
         
         .secondary{
         border-radius: 5px;
-        padding: 0.5rem 1rem;
+        padding: 0.6rem 0;
         background: #ffff;
         border: 1px solid #4B761F;
         color:#333;
+        text-decoration: none;
+        width: 16rem;
+        display: inline-block;
+        text-align: center;
+       font-size: 1.2rem;
         } 
         </style>`;
   }
 
   render() {
-    // this.shadowRoot.firstElementChild.addEventListener('click', this.idx);
-    // console.log(this.shadowRoot.firstElementChild);
     this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
-    console.log(this.shadowRoot.firstElementChild);
-    console.log(this.getTemplate().content.cloneNode(true));
-    console.log(this.idx);
   }
 
   connectedCallback() {
