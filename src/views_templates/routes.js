@@ -1,4 +1,6 @@
 import { home } from './home.js';
+import { login } from './login.js';
+import { register } from './register.js';
 
 export const routes = [
   {
@@ -7,11 +9,11 @@ export const routes = [
   },
   {
     path: '#register',
-    template: '<p>registro</p>',
+    template: register,
   },
   {
     path: '#login',
-    template: '<p>inicio de sesion</p>',
+    template: login,
   },
   {
     path: '#',
