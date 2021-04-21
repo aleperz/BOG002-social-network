@@ -7,16 +7,11 @@ export class InputGroup extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["type", "placeholder"];
+    return ["type", "placeholder", "value"];
   }
 
   attributeChangedCallback(atrr, oldValue, newValue) {
-    if (atrr === "type") {
-      this.type = newValue;
-    }
-    if (atrr === "placeholder") {
-      this.placeholder = newValue;
-    }
+    this[atrr] = newValue;
   }
 
   getTemplate() {
@@ -25,7 +20,7 @@ export class InputGroup extends HTMLElement {
     <label class="label">
       <slot name="title"></slot>
     </label>
-    <input type="${this.type}" placeholder="${this.placeholder}" class="input">
+    <input type="${this.type}" placeholder="${this.placeholder}" class="input" required>
    
     ${InputGroup.getStyles()}`;
     return template;
@@ -49,6 +44,10 @@ export class InputGroup extends HTMLElement {
 
   render() {
     this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
+    const input = this.shadowRoot.querySelector("input");
+    input.addEventListener("change", () => {
+      this.value = input.value;
+    });
   }
 
   connectedCallback() {
