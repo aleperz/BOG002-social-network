@@ -19,7 +19,7 @@ export class ActionButton extends HTMLElement {
     template.innerHTML = `
     <button class="${this.class}">
         <slot name='image'></slot>
-        <slot name='title' class='title'></slot>
+        <slot name='title'></slot>
     </button>
       ${ActionButton.getStyles()}`;
     return template;
@@ -34,13 +34,13 @@ export class ActionButton extends HTMLElement {
           background: #4B761F;
           border: none;
           color:white;
-          text-decoration: none;
           width: 16rem;
           text-align: center;
           font-size: 1.2rem;
+          cursor: pointer;
           display: flex;
-          align-items: center;
           justify-content: center;
+          align-items: center;
         }   
           
         .secondary{
@@ -49,19 +49,15 @@ export class ActionButton extends HTMLElement {
           background: #ffff;
           border: 1px solid #4B761F;
           color:#333;
-          text-decoration: none;
           width: 16rem;
           text-align: center;
           font-size: 1.2rem;
           display: flex;
-          align-items: center;
           justify-content: center;
+          align-items: center;
         } 
         
-        .title{
-            margin-bottom: 1px
-          }
-        </style>`;
+      </style>`;
   }
 
   render() {

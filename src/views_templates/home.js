@@ -6,6 +6,7 @@ export const home = `
 <img src="/img/fondo2.svg" class="img-home"/>
 </div>
 <div class= "btn-container-home">
+<button-action class="secondary" id="btn-google"><img src="./img/google-icon.svg" style="width: 20px; margin-right: 5px;" slot="image"/><span slot="title">Continuar con Google</span></button-action> 
 <button-view class="primary" href="/#login"><span slot="title">Iniciar sesion</span></button-view>
 <button-view class="secondary" href="/#register"><span slot="title">Registrarse</span></button-view>
 <img src="/img/img1.svg" class="img-home1"/>  

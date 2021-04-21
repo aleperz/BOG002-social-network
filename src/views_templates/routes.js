@@ -1,6 +1,7 @@
 import { home } from './home.js';
 import { login } from './login.js';
 import { register } from './register.js';
+import { resetPass } from './reset_pass.js';
 
 export const routes = [
   {
@@ -14,6 +15,10 @@ export const routes = [
   {
     path: '#login',
     template: login,
+  },
+  {
+    path: '#reset-pass',
+    template: resetPass,
   },
   {
     path: '#',
