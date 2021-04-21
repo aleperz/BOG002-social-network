@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Shadows+Into+Light+Two&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Shadows+Into+Light+Two&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -63,7 +62,7 @@ div.btn-container-home button-view {
   margin: 1rem 0;
 }
 
-div.btn-container-home img {
+div.btn-container-home > img {
   display: none;
 }
 
@@ -109,6 +108,21 @@ section.register-login-container a {
   margin: 1rem 0;
 }
 
+.resetpass-container{
+  display: flex;
+  justify-content: center;
+}
+
+section.resetpass-container h2{
+  color: var(--green1);
+  margin-top: 4rem;
+}
+
+section.resetpass-container input-group, button-action, button-view {
+  margin-top: 1.5rem
+}
+
+
 @media screen and (min-width: 640px) {
   .home-container {
     flex-direction: row;
@@ -132,7 +146,7 @@ section.register-login-container a {
     justify-content: center;
   }
 
-  div.btn-container-home img {
+  div.btn-container-home > img {
     position: absolute;
     display: block;
   }

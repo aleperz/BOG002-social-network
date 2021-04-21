@@ -43,6 +43,7 @@ export class ViewButton extends HTMLElement {
         display: inline-block;
         text-align: center;
         font-size: 1.2rem;
+        cursor: pointer;
         }   
         
         .secondary{
@@ -56,6 +57,7 @@ export class ViewButton extends HTMLElement {
         display: inline-block;
         text-align: center;
        font-size: 1.2rem;
+       cursor: pointer;
         } 
         </style>`;
   }
