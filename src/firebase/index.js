@@ -23,7 +23,7 @@
 //   appId: "1:121669978386:web:c1ef9695aa8b047b1c8bcb",
 //   measurementId: "G-HD4GK7VXHV",
 // };
-// // Initialize Firebase
+// Initialize Firebase
 // firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
 

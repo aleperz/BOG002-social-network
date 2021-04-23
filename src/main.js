@@ -16,10 +16,6 @@ customElements.define("header-general", Header);
 customElements.define("button-action", ActionButton);
 customElements.define("notification-toast", NotificacionToast);
 
-// const toNotificationToast = () =>{
-//   const notification = document.getElementById("")
-// }
-
 const toLoginGoogle = () => {
   const btnGoogle = document.getElementById("btn-google");
   btnGoogle.addEventListener("click", () => {
@@ -35,32 +31,110 @@ const signOut = () => {
   });
 };
 
+const printToatsError = (messageError) => {
+  const toastError = document.getElementById("error-toast");
+  const toastErrorSpan = toastError.shadowRoot.querySelector("span");
+  toastErrorSpan.textContent = messageError;
+  toastError.shadowRoot.querySelector("div").classList.add("show");
+};
+
+const printToatsDone = (messageDone) => {
+  const toastError = document.getElementById("done-toast");
+  const toastErrorSpan = toastError.shadowRoot.querySelector("span");
+  toastErrorSpan.textContent = messageDone;
+  toastError.shadowRoot.querySelector("div").classList.add("show");
+};
+
+const getErrorFirebase = (error, ...input) => {
+  let messageError;
+  switch (error.code) {
+    case "auth/argument-error":
+      messageError = "Debe ingresar correo y contraseña";
+      input[0].classList.add("error");
+      input[1].classList.add("error");
+      break;
+    case "auth/invalid-email":
+      messageError = "Correo invalido";
+      input[0].classList.add("error");
+      break;
+    case "auth/wrong-password":
+      messageError = "Contraseña invalida si no la recuerda haga clik en restablecer";
+      input[1].classList.add("error");
+      break;
+    case "verificacion":
+      messageError = "por favor realizar verificacion del correo";
+      input[0].classList.add("error");
+      break;
+    case "auth/email-already-in-use":
+      messageError = "Correo ya esta registrado";
+      input[0].classList.add("error");
+      break;
+    case "auth/weak-password":
+      messageError = "La contraseña debe tener minino 6 caracteres ";
+      input[1].classList.add("error");
+      break;
+    case "wrong/name":
+      messageError = "Debes ingresar tu nombre ";
+      input[0].classList.add("error");
+      break;
+    default:
+      messageError = "Ha ocurrido un error inesperado";
+      break;
+  }
+  printToatsError(messageError);
+};
 const toLogin = () => {
   const btnLogin = document.getElementById("btn-login");
   toLoginGoogle();
   signOut();
   btnLogin.addEventListener("click", () => {
-    const emailLogin = document.getElementById("email-login").value;
-    const passLogin = document.getElementById("pass-login").value;
+    const emailLogin = document.getElementById("email-login");
+    const passLogin = document.getElementById("pass-login");
+    const inputEmail = emailLogin.shadowRoot.querySelector("input");
+    const inputPass = passLogin.shadowRoot.querySelector("input");
+    inputEmail.classList.remove("error");
+    inputPass.classList.remove("error");
     auth
-      .authEmailPass(emailLogin, passLogin)
+      .authEmailPass(emailLogin.value, passLogin.value)
       .then((result) => {
         console.log(result);
       })
       .catch((error) => {
-        console.log(error);
+        getErrorFirebase(error, inputEmail, inputPass);
       });
   });
 };
 
 const toRegister = () => {
   const btnRegister = document.getElementById("btn-Register");
+  const emailRegister = document.getElementById("email-register");
+  const passRegister = document.getElementById("pass-register");
+  const nameRegister = document.getElementById("name-register");
+  const inputEmail = emailRegister.shadowRoot.querySelector("input");
+  const inputPass = passRegister.shadowRoot.querySelector("input");
+  const inputName = nameRegister.shadowRoot.querySelector("input");
   btnRegister.addEventListener("click", () => {
-    console.log("registro");
-    const emailRegister = document.getElementById("email-register").value;
-    const passRegister = document.getElementById("pass-register").value;
-    const nameRegister = document.getElementById("name-register").value;
-    auth.createAccountEmailPass(emailRegister, passRegister, nameRegister);
+    inputEmail.classList.remove("error");
+    inputPass.classList.remove("error");
+    inputName.classList.remove("error");
+    if (!nameRegister.value) {
+      const error = { code: "wrong/name" };
+      getErrorFirebase(error, inputName);
+      return;
+    }
+    auth
+      .createAccountEmailPass(
+        emailRegister.value,
+        passRegister.value,
+        nameRegister.value,
+      )
+      .then((result) => {
+        const messageDone = `${result}, estas a un paso de ser parte de EcoIdeate, verifica tu correo`;
+        printToatsDone(messageDone);
+      })
+      .catch((error) => {
+        getErrorFirebase(error, inputEmail, inputPass);
+      });
   });
 };
 
@@ -84,6 +158,9 @@ const changeObserver = new MutationObserver((mutaciones) => {
         break;
       case "#reset-pass":
         toResetPass();
+        break;
+      case "":
+        toLoginGoogle();
         break;
       default:
         break;

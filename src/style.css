@@ -7,7 +7,7 @@
 :root {
   --green1: #4b761f;
   --redError: #fe0404;
-  --yellowWarm: #fbbc05;
+  --yellowWarm: #fbbc05;  
 }
 
 body {
@@ -122,6 +122,9 @@ section.resetpass-container input-group, button-action, button-view {
   margin-top: 1.5rem
 }
 
+notification-toast > img{
+  margin: 1rem;
+}
 
 @media screen and (min-width: 640px) {
   .home-container {
