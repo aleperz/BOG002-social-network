@@ -15,38 +15,40 @@ export class AutenticationFirebase {
             resolve(`Bienvenido ${result.user.displayName}`);
           } else {
             firebase.auth().signOut();
-            reject(`Por favor realiza la verificación de la cuenta`);
+            // eslint-disable-next-line prefer-promise-reject-errors
+            reject({
+              code: "verificacion",
+              message: "por favor realizar verificacion del correo",
+            });
           }
+        })
+        .catch((error) => {
+          reject(error);
         });
     });
   }
 
-  createAccountEmailPass(email, password, name) {
-    firebase
+  async createAccountEmailPass(email, password, name) {
+    const result = await firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        result.user.updateProfile({
-          displayName: name,
-        });
+      .createUserWithEmailAndPassword(email, password);
+    result.user.updateProfile({
+      displayName: name,
+    });
 
-        const configuracion = {
-          url: "http://localhost:5000",
-        };
+    const configuracion = {
+      url: "http://localhost:5000/",
+    };
 
-        result.user.sendEmailVerification(configuracion).catch((error) => {
-          console.error(error);
-        });
+    await result.user.sendEmailVerification(configuracion);
 
-        firebase.auth().signOut();
+    firebase.auth().signOut();
 
-        console.log(
-          `Bienvenido ${name}, debes realizar el proceso de verificación`
-        );
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // console.log(
+    //   `Bienvenido ${name}, debes realizar el proceso de verificación`
+    // );
+    // });
+    return name;
   }
 
   authCuentaGoogle() {

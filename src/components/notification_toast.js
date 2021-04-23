@@ -14,96 +14,96 @@ export class NotificacionToast extends HTMLElement {
     this[atrr] = newValue;
   }
 
-  getSrcImg() {
-    switch (this.class) {
-      case "error":
-        this.src = "./img/errorIcon.svg";
-        break;
-      case "done":
-        this.src = "./img/doneIcon.svg";
-        break;
-      case "warn":
-        this.src = "./img/warnIcon.svg";
-        break;
-      default:
-        break;
-    }
-  }
-
   getTemplate() {
     const template = document.createElement("template");
     template.innerHTML = `
-    <div class="${this.class}">
+    <div class="${this.class}" id="cont-toast">
+      <slot name="image"></slot>
+      <div>
         <h2>
          <slot name="title"></slot>
         </h2>
-        <img src="${this.src}"
-  </div>      
-      ${NotificacionToast.getStyles()}
-      ${this.getSrcImg()}`;
+        <span>
+          <slot name="message"></slot>
+        </span>
+      </div>
+      <span class="close">X</span>
+    </div>      
+      ${NotificacionToast.getStyles()}`;
     return template;
   }
 
   static getStyles() {
     return `
     <style>
-      div{
+      div#cont-toast {
+        display: flex;
         visibility: hidden; 
         min-width: 250px; 
-        margin-left: -125px; 
-        background-color: #fff;
-        color: #333
-        text-align: center; 
-        border-radius: 2px; 
-        padding: 16px; 
+        color: #333;
+        border-radius: 1px 8px 8px 1px; 
+        padding: 10px; 
         position: fixed;
         z-index: 1; 
-        left: 50%; 
-        bottom: 30px;
+        left: 6%; 
+        bottom: 80%;
+        box-shadow: rgb(0 0 0 / 20%) 0 0 10px;
+        width: 340px;
+      }
+
+      div div h2 {
+        margin: 0 0 10px 0;
       }
 
       .error{
-        border-left: solid 4px #fe0404;
+        border: solid 1px #e8594c;
+        border-left: solid 10px #fe0404;        
+        background-color: #f6cfcb;
       }
 
       .done{
-        border-left: solid 4px #4b761f;
+        border-left: solid 10px #4b761f;
+        background-color: #d1e7dd;
       }
 
       .warn{
-        border-left: solid 4px #fbbc05;  
+        border-left: solid 10px #fbbc05;  
+        background-color: #fff3cd;
       }
 
-      div.show {
+      div#cont-toast.show {
         visibility: visible;                
-        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        -webkit-animation: fadein 0.5s;
+        animation: fadein 2s;
       }
       
         @-webkit-keyframes fadein {
         from {bottom: 0; opacity: 0;}
-        to {bottom: 30px; opacity: 1;}
+        to {bottom: 80%; opacity: 1;}
       }
       
       @keyframes fadein {
         from {bottom: 0; opacity: 0;}
-        to {bottom: 30px; opacity: 1;}
+        to {bottom: 80%; opacity: 1;}
       }
       
-      @-webkit-keyframes fadeout {
-        from {bottom: 30px; opacity: 1;}
-        to {bottom: 0; opacity: 0;}
-      }
-      
-      @keyframes fadeout {
-        from {bottom: 30px; opacity: 1;}
-        to {bottom: 0; opacity: 0;}
-      }
+      .close{
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 13px;
+        font-weight: bold;
+      }       
     </style>`;
   }
 
   render() {
     this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
+    const container = this.shadowRoot.querySelector("#cont-toast");
+    const close = this.shadowRoot.querySelector(".close");
+    close.addEventListener("click", () => {
+      container.classList.remove("show");
+    });
   }
 
   connectedCallback() {
