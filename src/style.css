@@ -80,7 +80,7 @@ div.btn-container-home > img {
   width: 100%;
 }
 
-div.container-form input-group{
+div.container-form input-group, input-password{
   width: 15rem;
   margin-inline: auto;
 }
