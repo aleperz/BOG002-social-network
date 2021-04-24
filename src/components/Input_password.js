@@ -41,7 +41,7 @@ export class InputPassword extends HTMLElement {
     .input-pass{
         display: block;
         margin-bottom: 16px;
-        padding: 0.2rem 2rem 0.2rem 0.2rem;
+        padding: 0.25rem 2rem 0.25rem 0.2rem;
         box-sizing: border-box;
         width: 100%; 
         border-radius: 5px;

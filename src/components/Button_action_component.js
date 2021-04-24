@@ -41,7 +41,7 @@ export class ActionButton extends HTMLElement {
           display: flex;
           justify-content: center;
           align-items: center;
-        }   
+        }
           
         .secondary{
           border-radius: 5px;
@@ -55,6 +55,7 @@ export class ActionButton extends HTMLElement {
           display: flex;
           justify-content: center;
           align-items: center;
+          cursor: pointer;
         } 
         
       </style>`;

@@ -41,6 +41,7 @@ export class InputGroup extends HTMLElement {
         width: 100%; 
         border-radius: 5px;
         border: 1px solid #c4c4c4;
+        box-sizing: border-box;
         }
     input:focus{
         outline: none;

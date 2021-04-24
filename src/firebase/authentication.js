@@ -1,9 +1,5 @@
 /* eslint-disable class-methods-use-this */
 export class AutenticationFirebase {
-  //  toNotificationToast()
-  //   const notifi
-  // }
-
   authEmailPass(email, password) {
     return new Promise((resolve, reject) => {
       firebase
@@ -35,19 +31,11 @@ export class AutenticationFirebase {
     result.user.updateProfile({
       displayName: name,
     });
-
     const configuracion = {
       url: "http://localhost:5000/",
     };
-
     await result.user.sendEmailVerification(configuracion);
-
     firebase.auth().signOut();
-
-    // console.log(
-    //   `Bienvenido ${name}, debes realizar el proceso de verificación`
-    // );
-    // });
     return name;
   }
 
@@ -60,24 +48,14 @@ export class AutenticationFirebase {
       .then((result) => {
         //  $("#avatar").attr("src", result.user.photoURL);
         console.log(`Bienvenido ${result.user.displayName} !! `);
-      })
-      .catch((error) => {
-        console.error(error);
-        console.log(`Error al autenticarse con google: ${error} `);
       });
   }
 
-  ressetPass(email) {
-    firebase
+  async ressetPass(email) {
+    await firebase
       .auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        console.log("correo enviado");
-      })
-      .catch((error) => {
-        console.error(error);
-        console.log(`Correo no registrado ${error}`);
-      });
+      .sendPasswordResetEmail(email);
+    return "Correo enviado";
   }
 
   signOutSesion() {

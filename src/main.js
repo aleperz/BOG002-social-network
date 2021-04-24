@@ -21,7 +21,6 @@ customElements.define("notification-toast", NotificacionToast);
 const toLoginGoogle = () => {
   const btnGoogle = document.getElementById("btn-google");
   btnGoogle.addEventListener("click", () => {
-    console.log("clic en  google");
     auth.authCuentaGoogle();
   });
 };
@@ -51,9 +50,12 @@ const getErrorFirebase = (error, ...input) => {
   let messageError;
   switch (error.code) {
     case "auth/argument-error":
-      messageError = "Debe ingresar correo y contraseña";
-      input[0].classList.add("error");
-      input[1].classList.add("error");
+      if (input.length > 1) {
+        messageError = "Debe ingresar correo y contraseña";
+        input[0].classList.add("error");
+        input[1].classList.add("error");
+      } else input[0].classList.add("error");
+      messageError = "Debe ingresar correo";
       break;
     case "auth/invalid-email":
       messageError = "Correo invalido";
@@ -76,7 +78,11 @@ const getErrorFirebase = (error, ...input) => {
       input[1].classList.add("error");
       break;
     case "wrong/name":
-      messageError = "Debes ingresar tu nombre ";
+      messageError = "Debes ingresar tu nombre";
+      input[0].classList.add("error");
+      break;
+    case "auth/user-not-found":
+      messageError = "El correo no esta registrado";
       input[0].classList.add("error");
       break;
     default:
@@ -108,6 +114,7 @@ const toLogin = () => {
 };
 
 const toRegister = () => {
+  toLoginGoogle();
   const btnRegister = document.getElementById("btn-Register");
   const emailRegister = document.getElementById("email-register");
   const passRegister = document.getElementById("pass-register");
@@ -134,17 +141,20 @@ const toRegister = () => {
         const messageDone = `${result}, estas a un paso de ser parte de EcoIdeate, verifica tu correo`;
         printToatsDone(messageDone);
       })
-      .catch((error) => {
-        getErrorFirebase(error, inputEmail, inputPass);
-      });
+      .catch((error) => getErrorFirebase(error, inputEmail, inputPass));
   });
 };
 
 const toResetPass = () => {
   const btnResetPass = document.getElementById("btn-resetpass");
   btnResetPass.addEventListener("click", () => {
-    const emailUser = document.getElementById("email-user").value;
-    auth.ressetPass(emailUser);
+    const emailUser = document.getElementById("email-user");
+    const inputEmail = emailUser.shadowRoot.querySelector("input");
+    inputEmail.classList.remove("error");
+    auth
+      .ressetPass(emailUser.value)
+      .then((result) => printToatsDone(result))
+      .catch((error) => getErrorFirebase(error, inputEmail));
   });
 };
 
@@ -174,3 +184,4 @@ const root = document.getElementById("root");
 changeObserver.observe(root, {
   childList: true,
 });
+toLoginGoogle();
