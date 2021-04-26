@@ -1,7 +1,7 @@
 export const login = `
 <header-general></header-general>
 <section class="register-login-container">
-    <img src="/img/img-login.svg"/>
+    <img src="./img/img-login.svg"/>
     <div class="container-form">
      <h2>Bienvenido !</h2>
      <button-action class="secondary" id="btn-google"><img src="./img/google-icon.svg" style="width: 20px; margin-right: 5px;" slot="image"/><span slot="title">Continuar con Google</span></button-action> 
