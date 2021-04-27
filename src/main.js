@@ -95,7 +95,7 @@ const getErrorFirebase = (error, ...input) => {
   printToatsError(messageError);
 };
 const toLogin = () => {
-  const btnLogin = document.getElementById("btn-login"); 
+  const btnLogin = document.getElementById("btn-login");
   btnLogin.addEventListener("click", () => {
     const emailLogin = document.getElementById("email-login");
     const passLogin = document.getElementById("pass-login");
