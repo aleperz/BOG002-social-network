@@ -12,7 +12,6 @@ export const login = `
      <button-action class="primary" id="btn-login"><span slot="title">Iniciar sesion</span></button-action>  
       <a href="/#register">¿No tienes cuenta? Registrate</a>
      <a href="#reset-pass">¿Olvide la contraseña?</a>
-     <button id="close">cerrar secion</button>
-    </div>
+     </div>
     <notification-toast class="error" id="error-toast"><img src="./img/errorIcon.svg" slot="image"/><span slot="title">Error</span></notification-toast>
 </section>`;

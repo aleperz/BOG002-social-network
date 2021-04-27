@@ -19,7 +19,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-image: url(/img/Group3.png);
+  background-image: url(./img/Group3.png);
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
@@ -126,11 +126,11 @@ notification-toast > img{
   margin: 1rem;
 }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 540px) {
   .home-container {
     flex-direction: row;
     justify-content: space-between;
-    background-image: url(/img/fondo_d.svg);
+    background-image: url(./img/fondo_d.svg);
   }
 
   .img-home {
@@ -157,25 +157,25 @@ notification-toast > img{
   .img-home1 {
     bottom: 0px;
     right: 0;
-    width: 13rem;
+    width: 10rem;
   }
 
   .img-home2 {
     bottom: 0px;
     left: 0;
-    width: 8rem;
+    width: 5rem;
   }
 
   .img-home3 {
     top: 0;
     right: 0;
-    width: 8rem;
+    width: 5rem;
   }
 
   .img-home4 {
     top: 0;
     left: 0;
-    width: 8rem;
+    width: 5rem;
   }
 
   .divider{
@@ -204,6 +204,31 @@ notification-toast > img{
 @media screen and (min-width: 1000px) {
  
   div.head-home img:first-child {
-    width: 30%;
+    width: 30%;   
+  }
+
+  .img-home1 {
+    bottom: 0px;
+    right: 0;
+    width: 13rem;
+  }
+
+  .img-home2 {
+    bottom: 0px;
+    left: 0;
+    width: 8rem;
+  }
+
+  .img-home3 {
+    top: 0;
+    right: 0;
+    width: 8rem;
+  }
+
+  .img-home4 {
+    top: 0;
+    left: 0;
+    width: 8rem;
   }
 }
+

@@ -24,9 +24,6 @@ export class InputPassword extends HTMLElement {
         <input type="password" placeholder="Ingrese contraseña" class="input-pass">
         <div class="eye"></div>
     </div>
-      
-        
-      
     ${InputPassword.getStyles()}`;
     return template;
   }

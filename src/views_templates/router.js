@@ -24,6 +24,8 @@ export class Router {
 
   loadRoute(...urlSeg) {
     const matchedRoute = this.matchUrlToRoute(urlSeg);
+    const url = `#${urlSeg}`;
+    window.history.pushState({}, 'done', url);
     this.mainContainer.innerHTML = matchedRoute.template;
   }
 }

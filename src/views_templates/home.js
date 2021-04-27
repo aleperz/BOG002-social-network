@@ -1,7 +1,7 @@
 export const home = `
 <section class="home-container">
 <div class="head-home">
-<img src=".img/logo.svg"/>
+<img src="./img/logo.svg"/>
 <h1>EcoIdeate</h1>
 <img src="./img/fondo2.svg" class="img-home"/>
 </div>
