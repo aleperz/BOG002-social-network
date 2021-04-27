@@ -6,6 +6,8 @@ import { InputPassword } from "./components/Input_password.js";
 import { Header } from "./components/header_components.js";
 import { ActionButton } from "./components/Button_action_component.js";
 import { NotificacionToast } from "./components/notification_toast.js";
+import { BarNavegation } from "./components/bar_navegation.js";
+
 // import firebase from "./firebase/index.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 
@@ -17,6 +19,7 @@ customElements.define("input-password", InputPassword);
 customElements.define("header-general", Header);
 customElements.define("button-action", ActionButton);
 customElements.define("notification-toast", NotificacionToast);
+customElements.define("bar-navegation", BarNavegation);
 
 const toLoginGoogle = () => {
   const btnGoogle = document.getElementById("btn-google");
@@ -92,9 +95,7 @@ const getErrorFirebase = (error, ...input) => {
   printToatsError(messageError);
 };
 const toLogin = () => {
-  const btnLogin = document.getElementById("btn-login");
-  toLoginGoogle();
-  signOut();
+  const btnLogin = document.getElementById("btn-login"); 
   btnLogin.addEventListener("click", () => {
     const emailLogin = document.getElementById("email-login");
     const passLogin = document.getElementById("pass-login");
@@ -106,6 +107,7 @@ const toLogin = () => {
       .authEmailPass(emailLogin.value, passLogin.value)
       .then((result) => {
         console.log(result);
+        router.loadRoute("home");
       })
       .catch((error) => {
         getErrorFirebase(error, inputEmail, inputPass);
@@ -114,7 +116,6 @@ const toLogin = () => {
 };
 
 const toRegister = () => {
-  toLoginGoogle();
   const btnRegister = document.getElementById("btn-Register");
   const emailRegister = document.getElementById("email-register");
   const passRegister = document.getElementById("pass-register");
@@ -164,15 +165,21 @@ const changeObserver = new MutationObserver((mutaciones) => {
     switch (currentRoute) {
       case "#login":
         toLogin();
+        toLoginGoogle();
         break;
       case "#register":
         toRegister();
+        toLoginGoogle();
         break;
       case "#reset-pass":
         toResetPass();
         break;
       case "":
         toLoginGoogle();
+        break;
+      case "#home":
+        toLoginGoogle();
+        signOut();
         break;
       default:
         break;

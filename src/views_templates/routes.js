@@ -2,6 +2,7 @@ import { home } from './home.js';
 import { login } from './login.js';
 import { register } from './register.js';
 import { resetPass } from './reset_pass.js';
+import { timeline } from "./timeline.js";
 
 export const routes = [
   {
@@ -19,6 +20,10 @@ export const routes = [
   {
     path: '#reset-pass',
     template: resetPass,
+  },
+  {
+    path: '#home',
+    template: timeline,
   },
   {
     path: '#',
