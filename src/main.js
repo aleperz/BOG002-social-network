@@ -158,32 +158,34 @@ const toResetPass = () => {
       .catch((error) => getErrorFirebase(error, inputEmail));
   });
 };
+const toVerificateRoute = (currentRoute) => {
+  switch (currentRoute) {
+    case "#login":
+      toLogin();
+      toLoginGoogle();
+      break;
+    case "#register":
+      toRegister();
+      toLoginGoogle();
+      break;
+    case "#reset-pass":
+      toResetPass();
+      break;
+    case "":
+      toLoginGoogle();
+      break;
+    case "#timeline":
+      signOut();
+      break;
+    default:
+      break;
+  }
+};
 
 const changeObserver = new MutationObserver((mutaciones) => {
   const currentRoute = window.location.hash;
   if (mutaciones[0].type === "childList") {
-    switch (currentRoute) {
-      case "#login":
-        toLogin();
-        toLoginGoogle();
-        break;
-      case "#register":
-        toRegister();
-        toLoginGoogle();
-        break;
-      case "#reset-pass":
-        toResetPass();
-        break;
-      case "":
-        toLoginGoogle();
-        break;
-      case "#home":
-        toLoginGoogle();
-        signOut();
-        break;
-      default:
-        break;
-    }
+    toVerificateRoute(currentRoute);
   }
 });
 
@@ -191,4 +193,8 @@ const root = document.getElementById("root");
 changeObserver.observe(root, {
   childList: true,
 });
-toLoginGoogle();
+
+window.addEventListener("load", () => {
+  const currentRoute = window.location.hash;
+  toVerificateRoute(currentRoute);
+});
