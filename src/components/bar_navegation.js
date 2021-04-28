@@ -1,9 +1,29 @@
 export class BarNavegation extends HTMLElement {
   constructor() {
     super();
+    this.currentRoute = window.location.hash;
     this.attachShadow({
       mode: "open",
     });
+  }
+
+  changeRoute() {
+    const timeline = this.shadowRoot.querySelector(".btn-home");
+    const perfil = this.shadowRoot.querySelector(".btn-perfil");
+    const settings = this.shadowRoot.querySelector(".btn-settings");
+    switch (this.currentRoute) {
+      case "#timeline":
+        timeline.classList.add("active");
+        break;
+      case "#profile":
+        perfil.classList.add("active");
+        break;
+      case "#settings":
+        settings.classList.add("active");
+        break;
+      default:
+        break;
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -11,11 +31,11 @@ export class BarNavegation extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `
     <nav  class="container-bar">
-        <div class="btn-home"><a href="#"></a></div>
-        <div class="btn-perfil"><a href="#"></a></div>
-        <div class="btn-settings"><a href="#"></a></div>
+    <a href="#timeline" class="btn-home"></a>
+    <a href="#profile" class="btn-perfil"></a>
+    <a href="#settings" class="btn-settings"></a>
     </nav>
-      ${BarNavegation.getStyles()}`;
+    ${BarNavegation.getStyles()}`;
     return template;
   }
 
@@ -23,44 +43,46 @@ export class BarNavegation extends HTMLElement {
     return `
       <style>
     .container-bar{
-        list-style-type: none;
-        padding: 0;
         display: grid;
         grid-template-columns: repeat(3, 1fr); 
         grid-wrap: 2px;
         justify-items: center;
         width: 100%;
-        height: auto;
+        height: 50px;
         box-shadow: 4px 0px 6px 1px rgba(0, 0, 0, 0.25);
         position: fixed;
         bottom: 0;
     }
     
     .btn-home{
-        background-image: url(./img/icon_home.svg);
+        background-image: url(./img/home.svg);
         background-size: 40px;
         background-position: center;
         background-repeat: no-repeat; 
-        width: 50px;
-        height: 50px; 
+        width: 100%;
+        height: 100%; 
     }
     
     .btn-perfil{
-        background-image: url(./img/icon_perfil.svg);
+        background-image: url(./img/user.svg);
         background-size: 40px;
         background-position: center;
         background-repeat: no-repeat; 
-        width: 50px;
-        height: 50px; 
+        width: 100%;
+        height: 100%;  
     }
     
     .btn-settings{
-        background-image: url(./img/menu_mobile.svg);
+        background-image: url(./img/menu.svg);
         background-size: 40px;
         background-position: center;
         background-repeat: no-repeat; 
-        width: 50px;
-        height: 50px;
+        width: 100%;
+        height: 100%; 
+    }
+
+    .active{
+      background-color: #A0C417;
     }
 
     @media screen and (min-width: 900px) {
@@ -71,11 +93,13 @@ export class BarNavegation extends HTMLElement {
       left: 0;
       align-items: center;
     } 
+
     </style>`;
   }
 
   render() {
     this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
+    this.changeRoute();
   }
 
   connectedCallback() {

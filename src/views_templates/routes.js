@@ -3,6 +3,8 @@ import { login } from './login.js';
 import { register } from './register.js';
 import { resetPass } from './reset_pass.js';
 import { timeline } from "./timeline.js";
+import { profile } from "./profile.js";
+import { settings } from "./settings.js";
 
 export const routes = [
   {
@@ -22,8 +24,16 @@ export const routes = [
     template: resetPass,
   },
   {
-    path: '#home',
+    path: '#timeline',
     template: timeline,
+  },
+  {
+    path: '#profile',
+    template: profile,
+  },
+  {
+    path: '#settings',
+    template: settings,
   },
   {
     path: '#',
