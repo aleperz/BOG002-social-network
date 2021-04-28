@@ -1,13 +1,12 @@
-import { Router } from "./views_templates/router.js";
-import { routes } from "./views_templates/routes.js";
-import { ViewButton } from "./components/Button_component.js";
+import { Router } from "./router/router.js";
+import { routes } from "./router/routes.js";
+import { ViewButton } from "./components/Button_view_component.js";
 import { InputGroup } from "./components/Input_component.js";
 import { InputPassword } from "./components/Input_password.js";
 import { Header } from "./components/header_components.js";
 import { ActionButton } from "./components/Button_action_component.js";
 import { NotificacionToast } from "./components/notification_toast.js";
 import { BarNavegation } from "./components/bar_navegation.js";
-
 // import firebase from "./firebase/index.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 
@@ -20,6 +19,13 @@ customElements.define("header-general", Header);
 customElements.define("button-action", ActionButton);
 customElements.define("notification-toast", NotificacionToast);
 customElements.define("bar-navegation", BarNavegation);
+
+const toHome = () => {
+  const btnLogin = document.getElementById("btn-login");
+  const btnRegister = document.getElementById("btn-register");
+  btnLogin.addEventListener("click", () => router.loadRoute("login"));
+  btnRegister.addEventListener("click", () => router.loadRoute("register"));
+};
 
 const toLoginGoogle = () => {
   const btnGoogle = document.getElementById("btn-google");
@@ -65,7 +71,7 @@ const getErrorFirebase = (error, ...input) => {
       input[0].classList.add("error");
       break;
     case "auth/wrong-password":
-      messageError = "Contraseña invalida si no la recuerda haga clik en restablecer";
+      messageError = "Contraseña invalida si no la recuerda haga clik en olvide la contraseña";
       input[1].classList.add("error");
       break;
     case "verificacion":
@@ -96,6 +102,8 @@ const getErrorFirebase = (error, ...input) => {
 };
 const toLogin = () => {
   const btnLogin = document.getElementById("btn-login");
+  const linkGoregister = document.getElementById("go-register");
+  const linkGoResetPass = document.getElementById("go-resetpass");
   btnLogin.addEventListener("click", () => {
     const emailLogin = document.getElementById("email-login");
     const passLogin = document.getElementById("pass-login");
@@ -107,15 +115,18 @@ const toLogin = () => {
       .authEmailPass(emailLogin.value, passLogin.value)
       .then((result) => {
         console.log(result);
-        router.loadRoute("home");
+        // router.loadRoute("timeline");
       })
       .catch((error) => {
         getErrorFirebase(error, inputEmail, inputPass);
       });
   });
+  linkGoregister.addEventListener("click", () => router.loadRoute("register"));
+  linkGoResetPass.addEventListener("click", () => router.loadRoute("reset-pass"));
 };
 
 const toRegister = () => {
+  const linkGoLogin = document.getElementById("go-login");
   const btnRegister = document.getElementById("btn-Register");
   const emailRegister = document.getElementById("email-register");
   const passRegister = document.getElementById("pass-register");
@@ -144,10 +155,12 @@ const toRegister = () => {
       })
       .catch((error) => getErrorFirebase(error, inputEmail, inputPass));
   });
+  linkGoLogin.addEventListener("click", () => router.loadRoute("login"));
 };
 
 const toResetPass = () => {
   const btnResetPass = document.getElementById("btn-resetpass");
+  const linkBackLogin = document.getElementById("back-login");
   btnResetPass.addEventListener("click", () => {
     const emailUser = document.getElementById("email-user");
     const inputEmail = emailUser.shadowRoot.querySelector("input");
@@ -157,6 +170,7 @@ const toResetPass = () => {
       .then((result) => printToatsDone(result))
       .catch((error) => getErrorFirebase(error, inputEmail));
   });
+  linkBackLogin.addEventListener("click", () => router.loadRoute("login"));
 };
 const toVerificateRoute = (currentRoute) => {
   switch (currentRoute) {
@@ -173,6 +187,7 @@ const toVerificateRoute = (currentRoute) => {
       break;
     case "":
       toLoginGoogle();
+      toHome();
       break;
     case "#timeline":
       signOut();
@@ -183,8 +198,10 @@ const toVerificateRoute = (currentRoute) => {
 };
 
 const changeObserver = new MutationObserver((mutaciones) => {
+  console.log("estoy en el mutation");
   const currentRoute = window.location.hash;
   if (mutaciones[0].type === "childList") {
+    console.log("estoy en el  if del mutation");
     toVerificateRoute(currentRoute);
   }
 });
@@ -192,9 +209,4 @@ const changeObserver = new MutationObserver((mutaciones) => {
 const root = document.getElementById("root");
 changeObserver.observe(root, {
   childList: true,
-});
-
-window.addEventListener("load", () => {
-  const currentRoute = window.location.hash;
-  toVerificateRoute(currentRoute);
 });

@@ -71,4 +71,14 @@ export class AutenticationFirebase {
         console.log(`No se puede  cerrar sesion: ${error} `);
       });
   }
+
+  vericateAuth() {
+    const verification = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        return true;
+      }
+      return false;
+    });
+    console.log(verification);
+  }
 }
