@@ -6,10 +6,18 @@ export class ViewButton extends HTMLElement {
     });
   }
 
-  static getTemplate() {
+  static get observedAttributes() {
+    return ["class"];
+  }
+
+  attributeChangedCallback(atrr, oldValue, newValue) {
+    this[atrr] = newValue;
+  }
+
+  getTemplate() {
     const template = document.createElement("template");
     template.innerHTML = `
-    <button>
+    <button class="${this.class}">
     <slot name='title'></slot>
     </button>
     ${ViewButton.getStyles()}`;
@@ -21,7 +29,7 @@ export class ViewButton extends HTMLElement {
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Shadows+Into+Light+Two&display=swap');
 
-    button{
+    .btn-underline{
       border: none;
       text-decoration: underline;
       background: none;
@@ -31,12 +39,21 @@ export class ViewButton extends HTMLElement {
     button:hover{
       color: #7b309a;
     }
+
+    .btn{
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: "Roboto", sans-serif;
+      font-size: 1rem
+    }
+    
  
-        </style>`;
+    </style>`;
   }
 
   render() {
-    this.shadowRoot.appendChild(ViewButton.getTemplate().content.cloneNode(true));
+    this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
   }
 
   connectedCallback() {

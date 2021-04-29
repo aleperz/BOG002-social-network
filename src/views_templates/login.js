@@ -10,8 +10,8 @@ export const login = `
      <input-password id="pass-login"></input-password>
      <label><input type="checkbox"> Recuerdame </label>
      <button-action class="primary" id="btn-login"><span slot="title">Iniciar sesion</span></button-action>  
-      <button-view id="go-register"><span slot="title">¿No tienes cuenta?Registrate</span></button-view>
-     <button-view id="go-resetpass"><span slot="title">¿Olvide la contraseña?</span></button-view>
+     <button-view id="go-register" class="btn-underline"><span slot="title">¿No tienes cuenta?Registrate</span></button-view>
+     <button-view id="go-resetpass" class="btn-underline"><span slot="title">¿Olvide la contraseña?</span></button-view>
      </div>
     <notification-toast class="error" id="error-toast"><img src="./img/errorIcon.svg" slot="image"/><span slot="title">Error</span></notification-toast>
 </section>`;

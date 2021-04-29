@@ -8,8 +8,8 @@ export class BarNavegation extends HTMLElement {
   }
 
   changeRoute() {
-    const timeline = this.shadowRoot.querySelector(".btn-home");
-    const perfil = this.shadowRoot.querySelector(".btn-perfil");
+    const timeline = this.shadowRoot.querySelector(".btn-timeline");
+    const perfil = this.shadowRoot.querySelector(".btn-profile");
     const settings = this.shadowRoot.querySelector(".btn-settings");
     switch (this.currentRoute) {
       case "#timeline":
@@ -31,9 +31,9 @@ export class BarNavegation extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `
     <nav  class="container-bar">
-    <a href="#timeline" class="btn-home"></a>
-    <a href="#profile" class="btn-perfil"></a>
-    <a href="#settings" class="btn-settings"></a>
+    <button class="btn-timeline"></button>
+    <button class="btn-profile"></button>
+    <button class="btn-settings"></button>
     </nav>
     ${BarNavegation.getStyles()}`;
     return template;
@@ -52,24 +52,29 @@ export class BarNavegation extends HTMLElement {
         box-shadow: 4px 0px 6px 1px rgba(0, 0, 0, 0.25);
         position: fixed;
         bottom: 0;
+        left: 0;
     }
     
-    .btn-home{
+    .btn-timeline{
         background-image: url(./img/home.svg);
         background-size: 40px;
         background-position: center;
         background-repeat: no-repeat; 
         width: 100%;
         height: 100%; 
+        border: none;
+        cursor: pointer;
     }
     
-    .btn-perfil{
+    .btn-profile{
         background-image: url(./img/user.svg);
         background-size: 40px;
         background-position: center;
         background-repeat: no-repeat; 
         width: 100%;
         height: 100%;  
+        border: none;
+        cursor: pointer;
     }
     
     .btn-settings{
@@ -79,6 +84,8 @@ export class BarNavegation extends HTMLElement {
         background-repeat: no-repeat; 
         width: 100%;
         height: 100%; 
+        border: none;
+        cursor: pointer;
     }
 
     .active{
