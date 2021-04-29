@@ -52,6 +52,7 @@ export class InputGroup extends HTMLElement {
     .error{
       border: solid red 2px;
       border-radius: 5px;
+      box-shadow: 0 0 0 0.25rem rgb(230 46 45 /35%);
     }
      </style>`;
   }
@@ -61,6 +62,7 @@ export class InputGroup extends HTMLElement {
     const input = this.shadowRoot.querySelector("input");
     input.addEventListener("change", () => {
       this.value = input.value;
+      if (this.value) input.classList.remove("error");
     });
   }
 

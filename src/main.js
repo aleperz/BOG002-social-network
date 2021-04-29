@@ -9,6 +9,7 @@ import { NotificacionToast } from "./components/notification_toast.js";
 import { BarNavegation } from "./components/bar_navegation.js";
 // import firebase from "./firebase/index.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
+import { messages } from "./views_templates/settings.js";
 
 const router = new Router(routes);
 const auth = new AutenticationFirebase();
@@ -31,13 +32,6 @@ const toLoginGoogle = () => {
   const btnGoogle = document.getElementById("btn-google");
   btnGoogle.addEventListener("click", () => {
     auth.authCuentaGoogle();
-  });
-};
-
-const signOut = () => {
-  const btnClose = document.getElementById("close");
-  btnClose.addEventListener("click", () => {
-    auth.signOutSesion();
   });
 };
 
@@ -109,8 +103,6 @@ const toLogin = () => {
     const passLogin = document.getElementById("pass-login");
     const inputEmail = emailLogin.shadowRoot.querySelector("input");
     const inputPass = passLogin.shadowRoot.querySelector("input");
-    inputEmail.classList.remove("error");
-    inputPass.classList.remove("error");
     auth
       .authEmailPass(emailLogin.value, passLogin.value)
       .then((result) => {
@@ -135,9 +127,6 @@ const toRegister = () => {
   const inputPass = passRegister.shadowRoot.querySelector("input");
   const inputName = nameRegister.shadowRoot.querySelector("input");
   btnRegister.addEventListener("click", () => {
-    inputEmail.classList.remove("error");
-    inputPass.classList.remove("error");
-    inputName.classList.remove("error");
     if (!nameRegister.value) {
       const error = { code: "wrong/name" };
       getErrorFirebase(error, inputName);
@@ -172,6 +161,33 @@ const toResetPass = () => {
   });
   linkBackLogin.addEventListener("click", () => router.loadRoute("login"));
 };
+
+const changeViewBarNavegation = () => {
+  const barNavegation = document.getElementById("bar-navegacion");
+  const btnTimeline = barNavegation.shadowRoot.querySelector(".btn-timeline");
+  const btnSettings = barNavegation.shadowRoot.querySelector(".btn-settings");
+  const btnProfile = barNavegation.shadowRoot.querySelector(".btn-profile");
+  btnTimeline.addEventListener("click", () => router.loadRoute("timeline"));
+  btnSettings.addEventListener("click", () => router.loadRoute("settings"));
+  btnProfile.addEventListener("click", () => router.loadRoute("profile"));
+};
+
+const toSettings = () => {
+  const changePass = document.getElementById("change-pass");
+  const info = document.getElementById("info");
+  const signOut = document.getElementById("singout");
+  const img = document.getElementById("img");
+  const message = document.getElementById("message");
+  const q = messages.length;
+  const numberRandom = Math.round(Math.random() * (q - 1));
+  const messageRandom = messages[numberRandom];
+  img.src = messageRandom.img;
+  message.textContent = messageRandom.message;
+  changePass.addEventListener("click", () => router.loadRoute("Change-password"));
+  info.addEventListener("click", () => router.loadRoute("info"));
+  signOut.addEventListener("click", () => auth.signOutSesion());
+};
+
 const toVerificateRoute = (currentRoute) => {
   switch (currentRoute) {
     case "#login":
@@ -190,7 +206,14 @@ const toVerificateRoute = (currentRoute) => {
       toHome();
       break;
     case "#timeline":
-      signOut();
+      changeViewBarNavegation();
+      break;
+    case "#profile":
+      changeViewBarNavegation();
+      break;
+    case "#settings":
+      changeViewBarNavegation();
+      toSettings();
       break;
     default:
       break;
@@ -198,10 +221,8 @@ const toVerificateRoute = (currentRoute) => {
 };
 
 const changeObserver = new MutationObserver((mutaciones) => {
-  console.log("estoy en el mutation");
   const currentRoute = window.location.hash;
   if (mutaciones[0].type === "childList") {
-    console.log("estoy en el  if del mutation");
     toVerificateRoute(currentRoute);
   }
 });

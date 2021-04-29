@@ -10,7 +10,7 @@ export const register = `
         <input-group type="email" placeholder="Ingrese su correo" id="email-register"><span slot="title">Correo electronico:</span></input-group>
         <input-password id="pass-register"></input-password>
         <button-action class="primary" id="btn-Register"><span slot="title">Registrate</span></button-action>  
-        <button-view id="go-login"><span slot="title">¿Ya tienes cuenta? Inicia sesion</span></button-view>
+        <button-view id="go-login" class="btn-underline"><span slot="title">¿Ya tienes cuenta? Inicia sesion</span></button-view>
         </div>
         <notification-toast class="error" id="error-toast"><img src="./img/errorIcon.svg" slot="image"/><span slot="title">Error</span></notification-toast>
         <notification-toast class="done" id="done-toast"><img src="./img/doneIcon.svg" slot="image"/><span slot="title">Bien hecho !</span></notification-toast>
