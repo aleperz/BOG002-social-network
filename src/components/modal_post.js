@@ -14,6 +14,17 @@ export class ModalPost extends HTMLElement {
     this[atrr] = newValue;
   }
 
+  handleEvent(event) {
+    if (event.type === "cleanTextarea") {
+      const btnPosting = this.shadowRoot.querySelector(".primary").shadowRoot.querySelector("button");
+      const textarea = this.shadowRoot.querySelector("textarea");
+      const modal = this.shadowRoot.querySelector("#modal");
+      modal.classList.replace("hidden", "modal");
+      textarea.value = "";
+      btnPosting.setAttribute("disabled", true);
+    }
+  }
+
   static getTemplate() {
     const template = document.createElement("template");
     template.innerHTML = `    
@@ -169,8 +180,6 @@ export class ModalPost extends HTMLElement {
         || cancel
       ) {
         modal.classList.replace("modal", "hidden");
-        textarea.value = "";
-        btnPosting.setAttribute("disabled", true);
       }
     });
     textarea.addEventListener("keyup", () => {
@@ -180,6 +189,7 @@ export class ModalPost extends HTMLElement {
   }
 
   connectedCallback() {
+    document.addEventListener("cleanTextarea", this);
     this.render();
   }
 }

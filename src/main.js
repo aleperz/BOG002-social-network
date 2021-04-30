@@ -216,6 +216,7 @@ const getDatePost = (timeStamp) => {
 const printPost = async () => {
   const containerPost = document.getElementById("container-post");
   post.getPost((querySnapshot) => {
+    containerPost.innerHTML = "";
     querySnapshot.forEach((doc) => {
       const docData = doc.data();
       const elementPost = document.createElement("data-post");
@@ -228,7 +229,6 @@ const printPost = async () => {
       description.textContent = docData.description;
       date.textContent = getDatePost(docData.date);
       photo.src = "./img/user.svg";
-      console.log(photo);
     });
   });
 };
