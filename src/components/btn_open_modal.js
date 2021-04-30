@@ -1,0 +1,63 @@
+export class BtnOpenModal extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({
+      mode: "open",
+    });
+  }
+
+  static get observedAttributes() {
+    return [];
+  }
+
+  attributeChangedCallback(atrr, oldValue, newValue) {
+    this[atrr] = newValue;
+  }
+
+  static getTemplate() {
+    const template = document.createElement("template");
+    template.innerHTML = `    
+    <button>+</button>
+        ${BtnOpenModal.getStyles()}`;
+    return template;
+  }
+
+  static getStyles() {
+    return `
+        <style>
+      button{
+        background-color: #4B761F;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        border: none;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+        color: white;
+        font-size: 2.5rem;
+        position: fixed;
+        right: 24px;
+        bottom: 114px;
+      }
+
+      @media screen and (min-width: 1000px) {
+       button{
+        right: 70px;
+        bottom: 114px;
+       }
+      }
+         </style>`;
+  }
+
+  render() {
+    this.shadowRoot.appendChild(BtnOpenModal.getTemplate().content.cloneNode(true));
+    const btnOpen = this.shadowRoot.querySelector("button");
+    btnOpen.addEventListener("click", () => {
+      const ModalPost = document.getElementById("modal-post").shadowRoot.querySelector("div");
+      ModalPost.classList.replace("hidden", "modal");
+    });
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+}

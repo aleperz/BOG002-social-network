@@ -7,12 +7,15 @@ import { Header } from "./components/header_components.js";
 import { ActionButton } from "./components/Button_action_component.js";
 import { NotificacionToast } from "./components/notification_toast.js";
 import { BarNavegation } from "./components/bar_navegation.js";
-// import firebase from "./firebase/index.js";
+import { ModalPost } from "./components/modal_post.js";
+import { BtnOpenModal } from "./components/btn_open_modal.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
+import { AdminPost } from "./firebase/post_User.js";
 import { messages } from "./views_templates/settings.js";
 
 const router = new Router(routes);
 const auth = new AutenticationFirebase();
+const post = new AdminPost();
 customElements.define("button-view", ViewButton);
 customElements.define("input-group", InputGroup);
 customElements.define("input-password", InputPassword);
@@ -20,6 +23,8 @@ customElements.define("header-general", Header);
 customElements.define("button-action", ActionButton);
 customElements.define("notification-toast", NotificacionToast);
 customElements.define("bar-navegation", BarNavegation);
+customElements.define("modal-post", ModalPost);
+customElements.define("open-modal", BtnOpenModal);
 
 const toHome = () => {
   const btnLogin = document.getElementById("btn-login");
@@ -107,7 +112,6 @@ const toLogin = () => {
       .authEmailPass(emailLogin.value, passLogin.value)
       .then((result) => {
         console.log(result);
-        // router.loadRoute("timeline");
       })
       .catch((error) => {
         getErrorFirebase(error, inputEmail, inputPass);
@@ -188,6 +192,16 @@ const toSettings = () => {
   signOut.addEventListener("click", () => auth.signOutSesion());
 };
 
+const newPost = () => {
+  const modalPost = document.getElementById("modal-post");
+  const divModal = modalPost.shadowRoot.getElementById("modal");
+  const btnPosting = modalPost.shadowRoot.querySelector(".primary"); 
+  btnPosting.addEventListener("click", async () => {
+    await post.savePost(modalPost.value);
+    divModal.classList.replace("modal", "hidden");
+  });
+};
+
 const toVerificateRoute = (currentRoute) => {
   switch (currentRoute) {
     case "#login":
@@ -207,6 +221,7 @@ const toVerificateRoute = (currentRoute) => {
       break;
     case "#timeline":
       changeViewBarNavegation();
+      newPost();
       break;
     case "#profile":
       changeViewBarNavegation();
