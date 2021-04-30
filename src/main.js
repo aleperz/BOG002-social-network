@@ -9,6 +9,7 @@ import { NotificacionToast } from "./components/notification_toast.js";
 import { BarNavegation } from "./components/bar_navegation.js";
 import { ModalPost } from "./components/modal_post.js";
 import { BtnOpenModal } from "./components/btn_open_modal.js";
+import { DataPost } from "./components/data_post.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 import { AdminPost } from "./firebase/post_User.js";
 import { messages } from "./views_templates/settings.js";
@@ -25,6 +26,7 @@ customElements.define("notification-toast", NotificacionToast);
 customElements.define("bar-navegation", BarNavegation);
 customElements.define("modal-post", ModalPost);
 customElements.define("open-modal", BtnOpenModal);
+customElements.define("data-post", DataPost);
 
 const toHome = () => {
   const btnLogin = document.getElementById("btn-login");
@@ -195,10 +197,39 @@ const toSettings = () => {
 const newPost = () => {
   const modalPost = document.getElementById("modal-post");
   const divModal = modalPost.shadowRoot.getElementById("modal");
-  const btnPosting = modalPost.shadowRoot.querySelector(".primary"); 
+  const btnPosting = modalPost.shadowRoot.querySelector(".primary");
   btnPosting.addEventListener("click", async () => {
     await post.savePost(modalPost.value);
     divModal.classList.replace("modal", "hidden");
+  });
+};
+const getDatePost = (timeStamp) => {
+  const d = new Date(timeStamp);
+  let month = `${d.getMonth() + 1}`;
+  let day = `${d.getDate()}`;
+  const year = d.getFullYear();
+  if (month.length < 2) month = `0${month}`;
+  if (day.length < 2) day = `0${day}`;
+  return [day, month, year].join('/');
+};
+
+const printPost = async () => {
+  const containerPost = document.getElementById("container-post");
+  post.getPost((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const docData = doc.data();
+      const elementPost = document.createElement("data-post");
+      containerPost.appendChild(elementPost);
+      const author = elementPost.shadowRoot.querySelector("h3");
+      const description = elementPost.shadowRoot.querySelector(".description");
+      const date = elementPost.shadowRoot.querySelector(".date");
+      const photo = elementPost.shadowRoot.querySelector("img");
+      author.textContent = docData.name;
+      description.textContent = docData.description;
+      date.textContent = getDatePost(docData.date);
+      photo.src = "./img/user.svg";
+      console.log(photo);
+    });
   });
 };
 
@@ -222,6 +253,7 @@ const toVerificateRoute = (currentRoute) => {
     case "#timeline":
       changeViewBarNavegation();
       newPost();
+      printPost();
       break;
     case "#profile":
       changeViewBarNavegation();

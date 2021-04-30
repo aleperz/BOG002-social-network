@@ -19,11 +19,12 @@ export class DataPost extends HTMLElement {
     template.innerHTML = `    
     <div class="container-post">
     <div class="container-user-data">
+    <img/>
       <h3></h3>
-      <p></p>
+      <p class="date"></p>
     </div class="contaimer-message">
     <div>
-      <p></p>
+      <p class="description"></p>
       <div></div>
     </div>
   </div>
@@ -34,7 +35,9 @@ export class DataPost extends HTMLElement {
   static getStyles() {
     return `
         <style>
-      
+      img{
+        width: 30px;
+      }
          </style>`;
   }
 
