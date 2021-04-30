@@ -6,12 +6,14 @@ export class BtnOpenModal extends HTMLElement {
     });
   }
 
-  static get observedAttributes() {
-    return [];
-  }
-
-  attributeChangedCallback(atrr, oldValue, newValue) {
-    this[atrr] = newValue;
+  handleEvent(event) {
+    if (event.type === "click") {
+      const cleanEvent = new CustomEvent("cleanTextarea", {
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(cleanEvent);
+    }
   }
 
   static getTemplate() {
@@ -51,10 +53,7 @@ export class BtnOpenModal extends HTMLElement {
   render() {
     this.shadowRoot.appendChild(BtnOpenModal.getTemplate().content.cloneNode(true));
     const btnOpen = this.shadowRoot.querySelector("button");
-    btnOpen.addEventListener("click", () => {
-      const ModalPost = document.getElementById("modal-post").shadowRoot.querySelector("div");
-      ModalPost.classList.replace("hidden", "modal");
-    });
+    btnOpen.addEventListener("click", this);
   }
 
   connectedCallback() {
