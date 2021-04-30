@@ -16,6 +16,11 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+button-action{
+  width: 80%;
+  max-width: 16rem;
+}
+
 .home-container {
   height: 100vh;
   display: flex;
@@ -164,6 +169,9 @@ div.menu-settings h1 {
   font-weight: 600;
 }
 
+.section-timeline{
+  margin: 52.7px 0 0 0;
+}
 
 @media screen and (min-width: 540px) {
   .home-container {

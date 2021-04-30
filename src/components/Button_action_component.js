@@ -34,7 +34,7 @@ export class ActionButton extends HTMLElement {
           background: #4B761F;
           border: none;
           color:white;
-          width: 16rem;
+          width: 100%;    
           text-align: center;
           font-size: 1.2rem;
           cursor: pointer;
@@ -49,15 +49,19 @@ export class ActionButton extends HTMLElement {
           background: #ffff;
           border: 1px solid #4B761F;
           color:#333;
-          width: 16rem;
+          width: 100%;    
           text-align: center;
           font-size: 1.2rem;
           display: flex;
           justify-content: center;
           align-items: center;
           cursor: pointer;
-        } 
-        
+        }
+
+        .primary[disabled]{
+          background: #c4c4c4;
+          color: #333;
+        }       
       </style>`;
   }
 
