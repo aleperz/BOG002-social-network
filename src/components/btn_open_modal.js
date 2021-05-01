@@ -41,9 +41,9 @@ export class BtnOpenModal extends HTMLElement {
         bottom: 114px;
       }
 
-      @media screen and (min-width: 1000px) {
+      @media screen and (min-width: 900px) {
        button{
-        right: 70px;
+        right: 350px;
         bottom: 114px;
        }
       }

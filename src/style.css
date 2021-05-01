@@ -10,13 +10,15 @@
   --green1: #4b761f;
   --redError: #fe0404;
   --yellowWarm: #fbbc05;
+  --colorFond: #dcdce075;
 }
 
 body {
   font-family: "Roboto", sans-serif;
+  background-color: var(--colorFond);
 }
 
-button-action{
+button-action {
   width: 80%;
   max-width: 16rem;
 }
@@ -69,7 +71,7 @@ div.btn-container-home button-action {
   margin-bottom: 1rem;
 }
 
-div.btn-container-home>img {
+div.btn-container-home > img {
   display: none;
 }
 
@@ -104,7 +106,7 @@ div.container-form button-view {
   margin-top: 52.7px;
 }
 
-section.register-login-container>img {
+section.register-login-container > img {
   display: none;
 }
 
@@ -131,7 +133,7 @@ section.resetpass-container h2 {
   margin-top: 4rem;
 }
 
-notification-toast>img {
+notification-toast > img {
   margin: 1rem;
 }
 
@@ -169,8 +171,26 @@ div.menu-settings h1 {
   font-weight: 600;
 }
 
-.section-timeline{
+.section-timeline {
   margin: 52.7px 0 0 0;
+}
+
+.section-timeline-profile {
+  margin: 52.7px 0 50px 0;
+}
+
+.container-posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-gap: 20px;
+  justify-content: center;
+  margin: auto;
+  width: 85%;
+  padding: 1rem 0 0 0;
+}
+
+.panel-img {
+  display: none;
 }
 
 @media screen and (min-width: 540px) {
@@ -196,7 +216,7 @@ div.menu-settings h1 {
     justify-content: center;
   }
 
-  div.btn-container-home>img {
+  div.btn-container-home > img {
     position: absolute;
     display: block;
   }
@@ -238,7 +258,7 @@ div.menu-settings h1 {
     align-items: center;
   }
 
-  section.register-login-container>img {
+  section.register-login-container > img {
     display: inline-block;
     width: 50%;
   }
@@ -248,7 +268,7 @@ div.menu-settings h1 {
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 900px) {
   div.head-home img:first-child {
     width: 30%;
   }
@@ -303,8 +323,29 @@ div.menu-settings h1 {
     padding: 2rem;
     margin-top: 3rem;
     color: var(--green1);
-}
+  }
+
   .menu-settings {
     width: 40%;
+  }
+
+  .section-timeline-profile {
+    margin: 52.7px 300px 0 100px;
+  }
+
+  .panel-img {
+    display: flex;
+    position: fixed;
+    top: 52.7px;
+    right: 0;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.25);
+    height: calc(100% - 52.7px);
+    background: white;
+    width: 300px;
+  }
+
+  div.panel-img img {
+    width: 100%;
   }
 }
