@@ -95,7 +95,7 @@ export class BarNavegation extends HTMLElement {
     @media screen and (min-width: 900px) {
     .container-bar{
       grid-template-columns: 1fr; 
-      width: 10%;
+      width: 100px;
       height: calc(100% - 52.7px);
       left: 0;
       align-items: center;
