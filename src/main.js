@@ -72,7 +72,8 @@ const getErrorFirebase = (error, ...input) => {
       input[0].classList.add("error");
       break;
     case "auth/wrong-password":
-      messageError = "Contraseña invalida si no la recuerda haga clik en olvide la contraseña";
+      messageError =
+        "Contraseña invalida si no la recuerda haga clik en olvide la contraseña";
       input[1].classList.add("error");
       break;
     case "verificacion":
@@ -120,7 +121,9 @@ const toLogin = () => {
       });
   });
   linkGoregister.addEventListener("click", () => router.loadRoute("register"));
-  linkGoResetPass.addEventListener("click", () => router.loadRoute("reset-pass"));
+  linkGoResetPass.addEventListener("click", () =>
+    router.loadRoute("reset-pass")
+  );
 };
 
 const toRegister = () => {
@@ -142,7 +145,7 @@ const toRegister = () => {
       .createAccountEmailPass(
         emailRegister.value,
         passRegister.value,
-        nameRegister.value,
+        nameRegister.value
       )
       .then((result) => {
         const messageDone = `${result}, estas a un paso de ser parte de EcoIdeate, verifica tu correo`;
@@ -189,7 +192,9 @@ const toSettings = () => {
   const messageRandom = messages[numberRandom];
   img.src = messageRandom.img;
   message.textContent = messageRandom.message;
-  changePass.addEventListener("click", () => router.loadRoute("Change-password"));
+  changePass.addEventListener("click", () =>
+    router.loadRoute("Change-password")
+  );
   info.addEventListener("click", () => router.loadRoute("info"));
   signOut.addEventListener("click", () => auth.signOutSesion());
 };
@@ -210,15 +215,17 @@ const getDatePost = (timeStamp) => {
   const year = d.getFullYear();
   if (month.length < 2) month = `0${month}`;
   if (day.length < 2) day = `0${day}`;
-  return [day, month, year].join('/');
+  return [day, month, year].join("/");
 };
 
-const printPost = async () => {
+const printPost = () => {
   const containerPost = document.getElementById("container-post");
   post.getPost((querySnapshot) => {
     containerPost.innerHTML = "";
+    console.log(querySnapshot.docs);
     querySnapshot.forEach((doc) => {
       const docData = doc.data();
+      console.log(doc.data());
       const elementPost = document.createElement("data-post");
       containerPost.appendChild(elementPost);
       const author = elementPost.shadowRoot.querySelector("h3");
