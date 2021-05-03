@@ -29,7 +29,7 @@ export class BtnOpenModal extends HTMLElement {
         <style>
       button{
         background-color: #4B761F;
-        border-radius: 50%;
+        border-radius: 100%;
         width: 44px;
         height: 44px;
         border: none;
@@ -51,7 +51,9 @@ export class BtnOpenModal extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.appendChild(BtnOpenModal.getTemplate().content.cloneNode(true));
+    this.shadowRoot.appendChild(
+      BtnOpenModal.getTemplate().content.cloneNode(true)
+    );
     const btnOpen = this.shadowRoot.querySelector("button");
     btnOpen.addEventListener("click", this);
   }
