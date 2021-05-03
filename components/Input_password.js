@@ -24,9 +24,6 @@ export class InputPassword extends HTMLElement {
         <input type="password" placeholder="Ingrese contraseña" class="input-pass">
         <div class="eye"></div>
     </div>
-      
-        
-      
     ${InputPassword.getStyles()}`;
     return template;
   }
@@ -56,6 +53,7 @@ export class InputPassword extends HTMLElement {
     .error{
       border: solid red 2px;
       border-radius: 5px;
+      box-shadow: 0 0 0 0.25rem rgb(230 46 45 /35%);
     }
 
     .container-input{
@@ -97,6 +95,7 @@ export class InputPassword extends HTMLElement {
     input.addEventListener("change", () => {
       this.value = input.value;
       this.showpassword();
+      if (this.value) input.classList.remove("error");
     });
   }
 

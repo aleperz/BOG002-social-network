@@ -11,7 +11,7 @@ export class Header extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `
     <header class="header">
-    <img src="/img/logo.svg" class="logo">
+    <img src="./img/logo.svg" class="logo">
       <h1>EcoIdeate</h1>      
     </header>   
     ${Header.getStyles()}`;
@@ -30,6 +30,8 @@ export class Header extends HTMLElement {
         background: #4b761f;
         width: 100%;
         font-size: 1.5rem;
+        position: fixed;
+        top: 0;
     }
     .logo{
         width: 45px;

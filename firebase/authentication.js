@@ -52,9 +52,7 @@ export class AutenticationFirebase {
   }
 
   async ressetPass(email) {
-    await firebase
-      .auth()
-      .sendPasswordResetEmail(email);
+    await firebase.auth().sendPasswordResetEmail(email);
     return "Correo enviado";
   }
 
@@ -69,5 +67,15 @@ export class AutenticationFirebase {
         console.error(error);
         console.log(`No se puede  cerrar sesion: ${error} `);
       });
+  }
+
+  vericateAuth() {
+    const verification = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        return true;
+      }
+      return false;
+    });
+    console.log(verification);
   }
 }

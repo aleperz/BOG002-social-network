@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <title>EcoIdeate</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
 
-    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <title>EcoIdeate</title>
+</head>
 
-    <!-- Add Firebase products that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script> 
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script> 
-  <script> 
-      const firebaseConfig = {
-        apiKey: "AIzaSyB1f_oP8WgrCXpg6sXQN4dIU0W-wgNdG80",
-        authDomain: "ecoideate-ec9e8.firebaseapp.com",
-        projectId: "ecoideate-ec9e8",
-        storageBucket: "ecoideate-ec9e8.appspot.com",
-        messagingSenderId: "121669978386",
-        appId: "1:121669978386:web:c1ef9695aa8b047b1c8bcb",
-        measurementId: "G-HD4GK7VXHV",
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
+<body>
+  <div id="root"></div>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB1f_oP8WgrCXpg6sXQN4dIU0W-wgNdG80",
+      authDomain: "ecoideate-ec9e8.firebaseapp.com",
+      projectId: "ecoideate-ec9e8",
+      storageBucket: "ecoideate-ec9e8.appspot.com",
+      messagingSenderId: "121669978386",
+      appId: "1:121669978386:web:c1ef9695aa8b047b1c8bcb",
+      measurementId: "G-HD4GK7VXHV",
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
     </script>
 
-    <script type="module" src="main.js"></script>
-  </body>
+  <script type="module" src="main.js"></script>
+</body>
+
 </html>
