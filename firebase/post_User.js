@@ -26,6 +26,6 @@ export class AdminPost {
   }
 
   getPost(callback) {
-    return db.collection("posts").onSnapshot(callback);
+    return db.collection("posts").orderBy("date", "desc").onSnapshot(callback);
   }
 }

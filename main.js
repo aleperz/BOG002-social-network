@@ -222,10 +222,8 @@ const printPost = () => {
   const containerPost = document.getElementById("container-post");
   post.getPost((querySnapshot) => {
     containerPost.innerHTML = "";
-    console.log(querySnapshot.docs);
     querySnapshot.forEach((doc) => {
       const docData = doc.data();
-      console.log(doc.data());
       const elementPost = document.createElement("data-post");
       containerPost.appendChild(elementPost);
       const author = elementPost.shadowRoot.querySelector("h3");
