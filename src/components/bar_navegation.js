@@ -53,6 +53,7 @@ export class BarNavegation extends HTMLElement {
         position: fixed;
         bottom: 0;
         left: 0;
+        background-color: #dcdce075;
     }
     
     .btn-timeline{
