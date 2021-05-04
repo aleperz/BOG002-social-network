@@ -22,16 +22,20 @@ export class Router {
   }
 
   loadRoute(urlSeg) {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(() => {
+      const user = firebase.auth().currentUser;
+      console.log(user);
       let matchedRoute = this.matchUrlToRoute(urlSeg);
       if (user) {
         matchedRoute = matchedRoute.requireAuth ? matchedRoute : this.routes[5];
       } else {
-        matchedRoute = !matchedRoute.requireAuth ? matchedRoute : this.routes[1];
+        matchedRoute = !matchedRoute.requireAuth
+          ? matchedRoute
+          : this.routes[1];
       }
 
       const url = matchedRoute.path;
-      window.history.pushState({}, 'done', url);
+      window.history.pushState({}, "done", url);
       // console.log(url);
 
       this.mainContainer.innerHTML = matchedRoute.template;

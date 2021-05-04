@@ -39,6 +39,7 @@ export class DataPost extends HTMLElement {
     return `
     <style>
       .container-post{
+        position:relative;
         display: grid;
         grid-template-columns: 1fr 1.1fr 1fr 1fr 1fr;
         grid-template-rows: max-content;
