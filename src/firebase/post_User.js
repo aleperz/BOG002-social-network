@@ -28,4 +28,14 @@ export class AdminPost {
   getPost(callback) {
     return db.collection("posts").orderBy("date", "desc").onSnapshot(callback);
   }
+
+  async getPostToEdit(id) {
+    const resultPost = await db.collection("post").doc(id).get();
+    console.log(resultPost);
+    return resultPost.data();
+  }
+
+  updatePost(objectRef, id) {
+    return db.collection("post").doc(id).update(objectRef);
+  }
 }
