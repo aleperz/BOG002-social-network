@@ -20,6 +20,7 @@ export class BtnOpenModal extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `    
     <button>+</button>
+    <p>-</p>
         ${BtnOpenModal.getStyles()}`;
     return template;
   }
@@ -39,6 +40,7 @@ export class BtnOpenModal extends HTMLElement {
         position: fixed;
         right: 24px;
         bottom: 114px;
+        cursor: pointer;
       }
 
       @media screen and (min-width: 900px) {
@@ -51,9 +53,7 @@ export class BtnOpenModal extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.appendChild(
-      BtnOpenModal.getTemplate().content.cloneNode(true)
-    );
+    this.shadowRoot.appendChild(BtnOpenModal.getTemplate().content.cloneNode(true));
     const btnOpen = this.shadowRoot.querySelector("button");
     btnOpen.addEventListener("click", this);
   }

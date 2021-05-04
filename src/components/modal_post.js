@@ -23,6 +23,14 @@ export class ModalPost extends HTMLElement {
       textarea.value = "";
       btnPosting.setAttribute("disabled", true);
     }
+    if (event.type === "openModalEdit") {
+      const modal = this.shadowRoot.querySelector("#modal");
+      modal.classList.replace("hidden", "modal");
+    }
+    if (event.type === "editContent") {
+      const textarea = this.shadowRoot.querySelector("textarea");
+      textarea.value = event.detail.message;
+    }
   }
 
   static getTemplate() {
@@ -190,6 +198,8 @@ export class ModalPost extends HTMLElement {
 
   connectedCallback() {
     document.addEventListener("cleanTextarea", this);
+    document.addEventListener("openModalEdit", this);
+    document.addEventListener("editContent", this);
     this.render();
   }
 }
