@@ -6,6 +6,7 @@ export class AutenticationFirebase {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then((result) => {
+          console.log(result.user);
           if (result.user.emailVerified) {
             // $('#avatar').attr('src', 'imagenes/usuario_auth.png');
             resolve(`Bienvenido ${result.user.displayName}`);
@@ -31,11 +32,11 @@ export class AutenticationFirebase {
     result.user.updateProfile({
       displayName: name,
     });
+    firebase.auth().signOut();
     const configuracion = {
       url: "http://localhost:5000/",
     };
     await result.user.sendEmailVerification(configuracion);
-    firebase.auth().signOut();
     return name;
   }
 

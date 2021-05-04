@@ -13,10 +13,12 @@ import { DataPost } from "./components/data_post.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 import { AdminPost } from "./firebase/post_User.js";
 import { messages } from "./views_templates/settings.js";
+import { EditDeletePost } from "./components/edit_delete_post.js";
 
 const router = new Router(routes);
 const auth = new AutenticationFirebase();
 const post = new AdminPost();
+
 customElements.define("button-view", ViewButton);
 customElements.define("input-group", InputGroup);
 customElements.define("input-password", InputPassword);
@@ -27,6 +29,7 @@ customElements.define("bar-navegation", BarNavegation);
 customElements.define("modal-post", ModalPost);
 customElements.define("open-modal", BtnOpenModal);
 customElements.define("data-post", DataPost);
+customElements.define("edit-delete-post", EditDeletePost);
 
 const toHome = () => {
   const btnLogin = document.getElementById("btn-login");
@@ -43,10 +46,13 @@ const toLoginGoogle = () => {
 };
 
 const printToatsError = (messageError) => {
+  console.log(messageError);
   const toastError = document.getElementById("error-toast");
   const toastErrorSpan = toastError.shadowRoot.querySelector("span");
-  toastErrorSpan.textContent = messageError;
+  console.log(toastErrorSpan);
+  toastErrorSpan.innerHTML = messageError;
   toastError.shadowRoot.querySelector("div").classList.add("show");
+  console.log(toastError);
 };
 
 const printToatsDone = (messageDone) => {
@@ -58,6 +64,7 @@ const printToatsDone = (messageDone) => {
 
 const getErrorFirebase = (error, ...input) => {
   let messageError;
+  console.log(error);
   switch (error.code) {
     case "auth/argument-error":
       if (input.length > 1) {
@@ -218,8 +225,16 @@ const getDatePost = (timeStamp) => {
   return [day, month, year].join("/");
 };
 
+const editPost = async (e) => {
+  const idPost = e.target.dataset.id;
+  console.log(idPost);
+  const result = await post.getPostToEdit("P8nj9Hzz8UsOnWwJV0HA");
+  console.log(result);
+};
+
 const printPost = () => {
   const containerPost = document.getElementById("container-post");
+  const user = firebase.auth().currentUser;
   post.getPost((querySnapshot) => {
     containerPost.innerHTML = "";
     querySnapshot.forEach((doc) => {
@@ -234,6 +249,17 @@ const printPost = () => {
       description.textContent = docData.description;
       date.textContent = getDatePost(docData.date);
       photo.src = "./img/user.svg";
+      if (docData.uid === user.uid) {
+        const managePost = document.createElement("edit-delete-post");
+        const containerPostShadow = elementPost.shadowRoot.querySelector(
+          ".container-post"
+        );
+        containerPostShadow.appendChild(managePost);
+        const updatePost = managePost.shadowRoot.querySelector("#edit");
+        updatePost.dataset.id = doc.id;
+        console.log(doc.id);
+        updatePost.addEventListener("click", editPost);
+      }
     });
   });
 };
