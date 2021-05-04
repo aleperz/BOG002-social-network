@@ -24,7 +24,6 @@ export class Router {
   loadRoute(urlSeg) {
     firebase.auth().onAuthStateChanged(() => {
       const user = firebase.auth().currentUser;
-      console.log(user);
       let matchedRoute = this.matchUrlToRoute(urlSeg);
       if (user) {
         matchedRoute = matchedRoute.requireAuth ? matchedRoute : this.routes[5];

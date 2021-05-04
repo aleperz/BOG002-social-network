@@ -92,9 +92,9 @@ export class InputPassword extends HTMLElement {
   render() {
     this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
     const input = this.shadowRoot.querySelector("input");
+    this.showpassword();
     input.addEventListener("change", () => {
       this.value = input.value;
-      this.showpassword();
       if (this.value) input.classList.remove("error");
     });
   }

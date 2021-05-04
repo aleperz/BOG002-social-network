@@ -32,6 +32,7 @@ export class Header extends HTMLElement {
         font-size: 1.5rem;
         position: fixed;
         top: 0;
+        z-index: 10;
     }
     .logo{
         width: 45px;

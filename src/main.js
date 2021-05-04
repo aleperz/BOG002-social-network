@@ -10,10 +10,10 @@ import { BarNavegation } from "./components/bar_navegation.js";
 import { ModalPost } from "./components/modal_post.js";
 import { BtnOpenModal } from "./components/btn_open_modal.js";
 import { DataPost } from "./components/data_post.js";
+import { EditDeletePost } from "./components/edit_delete_post.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 import { AdminPost } from "./firebase/post_User.js";
 import { messages } from "./views_templates/settings.js";
-import { EditDeletePost } from "./components/edit_delete_post.js";
 
 const router = new Router(routes);
 const auth = new AutenticationFirebase();
@@ -79,8 +79,7 @@ const getErrorFirebase = (error, ...input) => {
       input[0].classList.add("error");
       break;
     case "auth/wrong-password":
-      messageError =
-        "Contraseña invalida si no la recuerda haga clik en olvide la contraseña";
+      messageError = "Contraseña invalida si no la recuerda haga clik en olvide la contraseña";
       input[1].classList.add("error");
       break;
     case "verificacion":
@@ -128,9 +127,7 @@ const toLogin = () => {
       });
   });
   linkGoregister.addEventListener("click", () => router.loadRoute("register"));
-  linkGoResetPass.addEventListener("click", () =>
-    router.loadRoute("reset-pass")
-  );
+  linkGoResetPass.addEventListener("click", () => router.loadRoute("reset-pass"));
 };
 
 const toRegister = () => {
@@ -152,7 +149,7 @@ const toRegister = () => {
       .createAccountEmailPass(
         emailRegister.value,
         passRegister.value,
-        nameRegister.value
+        nameRegister.value,
       )
       .then((result) => {
         const messageDone = `${result}, estas a un paso de ser parte de EcoIdeate, verifica tu correo`;
@@ -199,9 +196,7 @@ const toSettings = () => {
   const messageRandom = messages[numberRandom];
   img.src = messageRandom.img;
   message.textContent = messageRandom.message;
-  changePass.addEventListener("click", () =>
-    router.loadRoute("Change-password")
-  );
+  changePass.addEventListener("click", () => router.loadRoute("Change-password"));
   info.addEventListener("click", () => router.loadRoute("info"));
   signOut.addEventListener("click", () => auth.signOutSesion());
 };
@@ -227,9 +222,27 @@ const getDatePost = (timeStamp) => {
 
 const editPost = async (e) => {
   const idPost = e.target.dataset.id;
-  console.log(idPost);
-  const result = await post.getPostToEdit("P8nj9Hzz8UsOnWwJV0HA");
+  const result = await post.getPostToEdit(idPost);
+  console.log(result.description);
+  const editContent = new CustomEvent("editContent", {
+    detail: { message: result.description },
+    bubbles: true,
+    composed: true,
+  });
+  dispatchEvent(editContent);
+  // const modalPost = document.getElementById("modal-post");
+  // modalPost.value = result.description;
+};
+
+const deletePosts = async (e) => {
+  const idPost = e.target.dataset.id;
+  const result = await post.getPostToEdit(idPost);
   console.log(result);
+  const managePost = e.target.shadowRoot.querySelector("edit-delete-post");
+  console.log(managePost.shadowRoot.querySelector(".optionsHide"));
+  // const managePost = document.querySelector("edit-delete-post");
+  const containerMenu = managePost.shadowRoot.querySelector(".optionsHide");
+  containerMenu.classList.remove("visible");
 };
 
 const printPost = () => {
@@ -252,13 +265,15 @@ const printPost = () => {
       if (docData.uid === user.uid) {
         const managePost = document.createElement("edit-delete-post");
         const containerPostShadow = elementPost.shadowRoot.querySelector(
-          ".container-post"
+          ".container-post",
         );
         containerPostShadow.appendChild(managePost);
         const updatePost = managePost.shadowRoot.querySelector("#edit");
+        const deletePost = managePost.shadowRoot.querySelector("#delete");
         updatePost.dataset.id = doc.id;
-        console.log(doc.id);
+        deletePost.dataset.id = doc.id;
         updatePost.addEventListener("click", editPost);
+        deletePost.addEventListener("click", deletePosts);
       }
     });
   });

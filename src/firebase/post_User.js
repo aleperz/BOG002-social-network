@@ -8,6 +8,7 @@ export class AdminPost {
 
   savePost(description) {
     const user = firebase.auth().currentUser;
+    console.log(user);
     let name;
     let photoUrl;
     let uid;
@@ -16,7 +17,7 @@ export class AdminPost {
       photoUrl = user.photoURL;
       uid = user.uid;
     }
-    return db.collection("posts").doc().set({
+    return db.collection("posts").add({
       description,
       name,
       photoUrl,
@@ -30,12 +31,11 @@ export class AdminPost {
   }
 
   async getPostToEdit(id) {
-    const resultPost = await db.collection("post").doc(id).get();
-    console.log(resultPost);
-    return resultPost.data();
+    const docRef = await db.collection("posts").doc(id).get();
+    return docRef.data();
   }
 
   updatePost(objectRef, id) {
-    return db.collection("post").doc(id).update(objectRef);
+    return db.collection("posts").doc(id).update(objectRef);
   }
 }
