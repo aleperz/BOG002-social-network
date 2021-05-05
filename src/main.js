@@ -30,6 +30,8 @@ customElements.define("modal-post", ModalPost);
 customElements.define("open-modal", BtnOpenModal);
 customElements.define("data-post", DataPost);
 customElements.define("edit-delete-post", EditDeletePost);
+let editStatusPost = false;
+let idPost = " ";
 
 const toHome = () => {
   const btnLogin = document.getElementById("btn-login");
@@ -46,13 +48,10 @@ const toLoginGoogle = () => {
 };
 
 const printToatsError = (messageError) => {
-  console.log(messageError);
   const toastError = document.getElementById("error-toast");
   const toastErrorSpan = toastError.shadowRoot.querySelector("span");
-  console.log(toastErrorSpan);
   toastErrorSpan.innerHTML = messageError;
   toastError.shadowRoot.querySelector("div").classList.add("show");
-  console.log(toastError);
 };
 
 const printToatsDone = (messageDone) => {
@@ -64,7 +63,6 @@ const printToatsDone = (messageDone) => {
 
 const getErrorFirebase = (error, ...input) => {
   let messageError;
-  console.log(error);
   switch (error.code) {
     case "auth/argument-error":
       if (input.length > 1) {
@@ -206,7 +204,12 @@ const newPost = () => {
   const divModal = modalPost.shadowRoot.getElementById("modal");
   const btnPosting = modalPost.shadowRoot.querySelector(".primary");
   btnPosting.addEventListener("click", async () => {
-    await post.savePost(modalPost.value);
+    if (!editStatusPost) {
+      await post.savePost(modalPost.value);
+    } else {
+      await post.updatePost({ description: modalPost.value }, idPost);
+      editStatusPost = false;
+    }
     divModal.classList.replace("modal", "hidden");
   });
 };
@@ -221,28 +224,20 @@ const getDatePost = (timeStamp) => {
 };
 
 const editPost = async (e) => {
-  const idPost = e.target.dataset.id;
+  editStatusPost = true;
+  idPost = e.target.dataset.id;
   const result = await post.getPostToEdit(idPost);
-  console.log(result.description);
   const editContent = new CustomEvent("editContent", {
     detail: { message: result.description },
     bubbles: true,
     composed: true,
   });
-  dispatchEvent(editContent);
-  // const modalPost = document.getElementById("modal-post");
-  // modalPost.value = result.description;
+  e.target.dispatchEvent(editContent);
 };
 
 const deletePosts = async (e) => {
-  const idPost = e.target.dataset.id;
-  const result = await post.getPostToEdit(idPost);
-  console.log(result);
-  const managePost = e.target.shadowRoot.querySelector("edit-delete-post");
-  console.log(managePost.shadowRoot.querySelector(".optionsHide"));
-  // const managePost = document.querySelector("edit-delete-post");
-  const containerMenu = managePost.shadowRoot.querySelector(".optionsHide");
-  containerMenu.classList.remove("visible");
+  idPost = e.target.dataset.id;
+  await post.deletePost(idPost);
 };
 
 const printPost = () => {

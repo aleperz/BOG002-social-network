@@ -8,7 +8,6 @@ export class AdminPost {
 
   savePost(description) {
     const user = firebase.auth().currentUser;
-    console.log(user);
     let name;
     let photoUrl;
     let uid;
@@ -36,6 +35,10 @@ export class AdminPost {
   }
 
   updatePost(objectRef, id) {
-    return db.collection("posts").doc(id).update(objectRef);
+    db.collection("posts").doc(id).update(objectRef);
+  }
+
+  deletePost(id) {
+    db.collection("posts").doc(id).delete();
   }
 }
