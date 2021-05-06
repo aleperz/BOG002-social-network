@@ -10,15 +10,23 @@ describe('authEmailPass', () => {
     expect(typeof auth.authEmailPass).toBe('function');
   });
 
-  it('deberia loguearme', () => {
+  it('deberia loguearme', (done) => {
     auth.authEmailPass("usuarionuevo@example.com", "123456789").then((result) => {
-      expect(typeof result).toBe("hola");
+      expect(result).toBe("Bienvenido usuario nuevo");
+      expect(typeof result).toBe("string");
+      done();
     });
   });
-
-  it('deberia verificar el correo', () => {
-    auth.authEmailPass("usuarionuevo@example.com", "123456789").then((result) => {
-      expect(result.user.emailVerified).toBeFalsy();
+  it('deberia validar si el  correo se verifico', (done) => {
+    auth.authEmailPass("usuarioNoVerificado@example.com", "123456789").catch((error) => {
+      expect(error.code).toBe("verificacion");
+      done();
+    });
+  });
+  it('deberia indicar que no esta registrado', (done) => {
+    auth.authEmailPass("usuarioNoExite@example.com", "123456789").catch((error) => {
+      expect(error.code).toBe("correo no registrado");
+      done();
     });
   });
 });
