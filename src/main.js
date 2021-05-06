@@ -31,7 +31,7 @@ customElements.define("open-modal", BtnOpenModal);
 customElements.define("data-post", DataPost);
 customElements.define("edit-delete-post", EditDeletePost);
 let editStatusPost = false;
-let idPost = " ";
+let idPost = "";
 
 const toHome = () => {
   const btnLogin = document.getElementById("btn-login");

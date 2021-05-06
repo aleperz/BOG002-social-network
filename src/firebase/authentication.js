@@ -6,9 +6,9 @@ export class AutenticationFirebase {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then((result) => {
-          console.log(result.user);
+          console.log(result);
           if (result.user.emailVerified) {
-            // $('#avatar').attr('src', 'imagenes/usuario_auth.png');
+            // ('avatar').attr('src', 'imagenes/usuario_auth.png');
             resolve(`Bienvenido ${result.user.displayName}`);
           } else {
             firebase.auth().signOut();
