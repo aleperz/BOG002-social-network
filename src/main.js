@@ -42,8 +42,9 @@ const toHome = () => {
 
 const toLoginGoogle = () => {
   const btnGoogle = document.getElementById("btn-google");
+  const provider = new firebase.auth.GoogleAuthProvider();
   btnGoogle.addEventListener("click", () => {
-    auth.authCuentaGoogle();
+    auth.authCuentaGoogle(provider);
   });
 };
 
@@ -200,12 +201,13 @@ const toSettings = () => {
 };
 
 const newPost = () => {
+  const user = firebase.auth().currentUser;
   const modalPost = document.getElementById("modal-post");
   const divModal = modalPost.shadowRoot.getElementById("modal");
   const btnPosting = modalPost.shadowRoot.querySelector(".primary");
   btnPosting.addEventListener("click", async () => {
     if (!editStatusPost) {
-      await post.savePost(modalPost.value);
+      await post.savePost(modalPost.value, user);
     } else {
       await post.updatePost({ description: modalPost.value }, idPost);
       editStatusPost = false;
