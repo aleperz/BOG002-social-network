@@ -39,6 +39,21 @@ const objectRef = {
   description: "editeee el  post",
 };
 
+describe('getPost', () => {
+  it('deberia mostrar la descripcion del primer post', (done) => {
+    const callback = (querySnapshot) => {
+      const allPosts = [];
+      querySnapshot.forEach((doc) => {
+        allPosts.push({ ...doc.data() });
+      });
+      expect(allPosts[0].description).toBe('prueba de post con edicion incluida');
+      expect(allPosts).toHaveLength(2);
+      done();
+    };
+    posts.getPost(callback);
+  });
+});
+
 describe('savePost', () => {
   it('deberia guardar post', (done) => posts.savePost("este es un post", user).then((result) => {
     console.log(result);

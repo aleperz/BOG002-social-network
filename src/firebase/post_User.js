@@ -3,7 +3,6 @@
 
 export class AdminPost {
   savePost(description, user) {
-    // const user = firebase.auth().currentUser;
     let name;
     let photoURL;
     let uid;
@@ -12,7 +11,7 @@ export class AdminPost {
       photoURL = user.photoURL;
       uid = user.uid;
     }
-    return firebase.firestore().collection("posts").add({
+    return db.collection("posts").add({
       description,
       name,
       photoURL,
