@@ -1,7 +1,7 @@
 export const timeline = `
 <header-general></header-general>
 <section class="section-timeline-profile">
-<modal-post id="modal-post"><span slot="title">Crear publicacion</span></modal-post>
+<modal-post id="modal-post"></modal-post>
 <div id="container-post" class="container-posts">
 <data-post></data-post>
 </div>

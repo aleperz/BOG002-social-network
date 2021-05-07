@@ -10,14 +10,17 @@ import { BarNavegation } from "./components/bar_navegation.js";
 import { ModalPost } from "./components/modal_post.js";
 import { BtnOpenModal } from "./components/btn_open_modal.js";
 import { DataPost } from "./components/data_post.js";
+import { BtnLike } from "./components/like.js";
 import { EditDeletePost } from "./components/edit_delete_post.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 import { AdminPost } from "./firebase/post_User.js";
+import { LikeUser } from "./firebase/like_User.js";
 import { messages } from "./views_templates/settings.js";
 
 const router = new Router(routes);
 const auth = new AutenticationFirebase();
 const post = new AdminPost();
+const like = new LikeUser();
 
 customElements.define("button-view", ViewButton);
 customElements.define("input-group", InputGroup);
@@ -30,6 +33,9 @@ customElements.define("modal-post", ModalPost);
 customElements.define("open-modal", BtnOpenModal);
 customElements.define("data-post", DataPost);
 customElements.define("edit-delete-post", EditDeletePost);
+customElements.define("btn-like", BtnLike);
+let editStatusPost = false;
+let idPost = "";
 
 const toHome = () => {
   const btnLogin = document.getElementById("btn-login");
@@ -40,19 +46,17 @@ const toHome = () => {
 
 const toLoginGoogle = () => {
   const btnGoogle = document.getElementById("btn-google");
+  const provider = new firebase.auth.GoogleAuthProvider();
   btnGoogle.addEventListener("click", () => {
-    auth.authCuentaGoogle();
+    auth.authCuentaGoogle(provider);
   });
 };
 
 const printToatsError = (messageError) => {
-  console.log(messageError);
   const toastError = document.getElementById("error-toast");
   const toastErrorSpan = toastError.shadowRoot.querySelector("span");
-  console.log(toastErrorSpan);
   toastErrorSpan.innerHTML = messageError;
   toastError.shadowRoot.querySelector("div").classList.add("show");
-  console.log(toastError);
 };
 
 const printToatsDone = (messageDone) => {
@@ -64,7 +68,6 @@ const printToatsDone = (messageDone) => {
 
 const getErrorFirebase = (error, ...input) => {
   let messageError;
-  console.log(error);
   switch (error.code) {
     case "auth/argument-error":
       if (input.length > 1) {
@@ -79,8 +82,7 @@ const getErrorFirebase = (error, ...input) => {
       input[0].classList.add("error");
       break;
     case "auth/wrong-password":
-      messageError =
-        "Contraseña invalida si no la recuerda haga clik en olvide la contraseña";
+      messageError = "Contraseña invalida si no la recuerda haga clik en olvide la contraseña";
       input[1].classList.add("error");
       break;
     case "verificacion":
@@ -128,9 +130,7 @@ const toLogin = () => {
       });
   });
   linkGoregister.addEventListener("click", () => router.loadRoute("register"));
-  linkGoResetPass.addEventListener("click", () =>
-    router.loadRoute("reset-pass")
-  );
+  linkGoResetPass.addEventListener("click", () => router.loadRoute("reset-pass"));
 };
 
 const toRegister = () => {
@@ -152,7 +152,7 @@ const toRegister = () => {
       .createAccountEmailPass(
         emailRegister.value,
         passRegister.value,
-        nameRegister.value
+        nameRegister.value,
       )
       .then((result) => {
         const messageDone = `${result}, estas a un paso de ser parte de EcoIdeate, verifica tu correo`;
@@ -199,19 +199,23 @@ const toSettings = () => {
   const messageRandom = messages[numberRandom];
   img.src = messageRandom.img;
   message.textContent = messageRandom.message;
-  changePass.addEventListener("click", () =>
-    router.loadRoute("Change-password")
-  );
+  changePass.addEventListener("click", () => router.loadRoute("Change-password"));
   info.addEventListener("click", () => router.loadRoute("info"));
   signOut.addEventListener("click", () => auth.signOutSesion());
 };
 
 const newPost = () => {
+  const user = firebase.auth().currentUser;
   const modalPost = document.getElementById("modal-post");
   const divModal = modalPost.shadowRoot.getElementById("modal");
   const btnPosting = modalPost.shadowRoot.querySelector(".primary");
   btnPosting.addEventListener("click", async () => {
-    await post.savePost(modalPost.value);
+    if (!editStatusPost) {
+      await post.savePost(modalPost.value, user);
+    } else {
+      await post.updatePost({ description: modalPost.value }, idPost);
+      editStatusPost = false;
+    }
     divModal.classList.replace("modal", "hidden");
   });
 };
@@ -226,29 +230,40 @@ const getDatePost = (timeStamp) => {
 };
 
 const editPost = async (e) => {
-  const idPost = e.target.dataset.id;
-  console.log(e.target);
+  editStatusPost = true;
+  idPost = e.target.dataset.id;
   const result = await post.getPostToEdit(idPost);
-  console.log(result.description);
   const editContent = new CustomEvent("editContent", {
     detail: { message: result.description },
     bubbles: true,
     composed: true,
   });
   e.target.dispatchEvent(editContent);
-  // const modalPost = document.getElementById("modal-post");
-  // modalPost.value = result.description;
 };
 
 const deletePosts = async (e) => {
-  const idPost = e.target.dataset.id;
-  const result = await post.getPostToEdit(idPost);
-  console.log(result);
-  const managePost = e.target.shadowRoot.querySelector("edit-delete-post");
-  console.log(managePost.shadowRoot.querySelector(".optionsHide"));
-  // const managePost = document.querySelector("edit-delete-post");
-  const containerMenu = managePost.shadowRoot.querySelector(".optionsHide");
-  containerMenu.classList.remove("visible");
+  idPost = e.target.dataset.id;
+  await post.deletePost(idPost);
+};
+
+const giveLike = async (e) => {
+  const btnClass = e.target.classList.contains("active");
+  const idp = e.target.dataset.id;
+  const user = firebase.auth().currentUser;
+  const idUser = user.uid;
+  if (btnClass) await like.saveLike(idp, idUser);
+  else await like.deleteLike(idp, idUser);
+};
+
+const paintLike = async (id, countLike) => {
+  await like.getLike(id, (querySnapshot) => {
+    const likeByPost = [];
+    querySnapshot.forEach((doc) => {
+      likeByPost.push({ ...doc.data() });
+    });
+    const lc = countLike;
+    lc.textContent = likeByPost.length;
+  });
 };
 
 const printPost = () => {
@@ -260,6 +275,10 @@ const printPost = () => {
       const docData = doc.data();
       const elementPost = document.createElement("data-post");
       containerPost.appendChild(elementPost);
+      const likeBtn = elementPost.shadowRoot.querySelector("btn-like").shadowRoot.querySelector(".like");
+      const likeCount = elementPost.shadowRoot.querySelector("btn-like").shadowRoot.querySelector("span");
+      likeBtn.dataset.id = doc.id;
+      likeBtn.addEventListener("click", giveLike);
       const author = elementPost.shadowRoot.querySelector("h3");
       const description = elementPost.shadowRoot.querySelector(".description");
       const date = elementPost.shadowRoot.querySelector(".date");
@@ -271,7 +290,7 @@ const printPost = () => {
       if (docData.uid === user.uid) {
         const managePost = document.createElement("edit-delete-post");
         const containerPostShadow = elementPost.shadowRoot.querySelector(
-          ".container-post"
+          ".container-post",
         );
         containerPostShadow.appendChild(managePost);
         const updatePost = managePost.shadowRoot.querySelector("#edit");
@@ -281,6 +300,7 @@ const printPost = () => {
         updatePost.addEventListener("click", editPost);
         deletePost.addEventListener("click", deletePosts);
       }
+      paintLike(doc.id, likeCount);
     });
   });
 };

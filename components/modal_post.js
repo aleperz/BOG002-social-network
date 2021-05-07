@@ -15,27 +15,25 @@ export class ModalPost extends HTMLElement {
   }
 
   handleEvent(event) {
+    const btnPosting = this.shadowRoot.querySelector(".primary").shadowRoot.querySelector("button");
+    const textarea = this.shadowRoot.querySelector("textarea");
+    const modal = this.shadowRoot.querySelector("#modal");
+    const titleModal = this.shadowRoot.querySelector("h2");
+    const btnUpdate = this.shadowRoot.querySelector(".primary > span");
     if (event.type === "cleanTextarea") {
-      const btnPosting = this.shadowRoot
-        .querySelector(".primary")
-        .shadowRoot.querySelector("button");
-      const textarea = this.shadowRoot.querySelector("textarea");
-      const modal = this.shadowRoot.querySelector("#modal");
       modal.classList.replace("hidden", "modal");
       textarea.value = "";
       btnPosting.setAttribute("disabled", true);
+      titleModal.textContent = "Crear publicacion";
+      btnUpdate.innerText = "Publicar";
     }
     if (event.type === "openModalEdit") {
-      const modal = this.shadowRoot.querySelector("#modal");
       modal.classList.replace("hidden", "modal");
     }
     if (event.type === "editContent") {
-      const btnPosting = this.shadowRoot
-        .querySelector(".primary")
-        .shadowRoot.querySelector("button");
-      btnPosting.setAttribute("disabled", false);
-      const textarea = this.shadowRoot.querySelector("textarea");
+      btnUpdate.innerText = "Guardar";
       textarea.value = event.detail.message;
+      titleModal.textContent = "Editar publicacion";
     }
   }
 
@@ -45,12 +43,10 @@ export class ModalPost extends HTMLElement {
     <div class="hidden" id="modal">
     <div class="container-modal">
       <span class="close">&times;</span>
-      <h2>
-        <slot name="title"></slot>
-      </h2>
+      <h2></h2>
       <textarea class="message" rows="7" cols="35"></textarea>
       <div class="container-btn">
-        <button-action class="primary"><span slot="title">Publicar</span></button-action>
+        <button-action class="primary"><span slot="title">publicar</span></button-action>
         <button-action class="secondary"><span slot="title">Cancelar</span></button-action>        
       </div>
       <img src="">
@@ -179,18 +175,20 @@ export class ModalPost extends HTMLElement {
 
   render() {
     this.shadowRoot.appendChild(
-      ModalPost.getTemplate().content.cloneNode(true)
+      ModalPost.getTemplate().content.cloneNode(true),
     );
     const modal = this.shadowRoot.querySelector("#modal");
     const textarea = this.shadowRoot.querySelector("textarea");
     const btnClose = this.shadowRoot.querySelector(".close");
-    const btnPosting = this.shadowRoot
-      .querySelector(".primary")
-      .shadowRoot.querySelector("button");
+    const btnPosting = this.shadowRoot.querySelector(".primary").shadowRoot.querySelector("button");
     btnPosting.setAttribute("disabled", true);
     this.shadowRoot.addEventListener("click", (event) => {
       const cancel = event.target.closest(".secondary");
-      if (event.target === modal || event.target === btnClose || cancel) {
+      if (
+        event.target === modal
+        || event.target === btnClose
+        || cancel
+      ) {
         modal.classList.replace("modal", "hidden");
       }
     });
