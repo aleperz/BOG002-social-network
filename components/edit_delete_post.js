@@ -6,6 +6,18 @@ export class EditDeletePost extends HTMLElement {
     });
   }
 
+  handleEvent(event) {
+    if (event.type === "click") {
+      const openModalEdit = new CustomEvent("openModalEdit", {
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(openModalEdit);
+      const optionMenu = this.shadowRoot.querySelector(".optionsHide");
+      optionMenu.classList.remove("visible");
+    }
+  }
+
   static getTemplate() {
     const template = document.createElement("template");
     template.innerHTML = `    
@@ -63,14 +75,14 @@ export class EditDeletePost extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.appendChild(
-      EditDeletePost.getTemplate().content.cloneNode(true)
-    );
+    this.shadowRoot.appendChild(EditDeletePost.getTemplate().content.cloneNode(true));
     const menu = this.shadowRoot.querySelector("span");
     const optionMenu = this.shadowRoot.querySelector(".optionsHide");
     menu.addEventListener("click", () => {
       optionMenu.classList.toggle("visible");
     });
+    const btnEdit = this.shadowRoot.querySelector("#edit");
+    btnEdit.addEventListener("click", this);
   }
 
   connectedCallback() {

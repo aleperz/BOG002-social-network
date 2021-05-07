@@ -10,10 +10,10 @@ import { BarNavegation } from "./components/bar_navegation.js";
 import { ModalPost } from "./components/modal_post.js";
 import { BtnOpenModal } from "./components/btn_open_modal.js";
 import { DataPost } from "./components/data_post.js";
+import { EditDeletePost } from "./components/edit_delete_post.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 import { AdminPost } from "./firebase/post_User.js";
 import { messages } from "./views_templates/settings.js";
-import { EditDeletePost } from "./components/edit_delete_post.js";
 
 const router = new Router(routes);
 const auth = new AutenticationFirebase();
@@ -227,9 +227,28 @@ const getDatePost = (timeStamp) => {
 
 const editPost = async (e) => {
   const idPost = e.target.dataset.id;
-  console.log(idPost);
-  const result = await post.getPostToEdit("P8nj9Hzz8UsOnWwJV0HA");
+  console.log(e.target);
+  const result = await post.getPostToEdit(idPost);
+  console.log(result.description);
+  const editContent = new CustomEvent("editContent", {
+    detail: { message: result.description },
+    bubbles: true,
+    composed: true,
+  });
+  e.target.dispatchEvent(editContent);
+  // const modalPost = document.getElementById("modal-post");
+  // modalPost.value = result.description;
+};
+
+const deletePosts = async (e) => {
+  const idPost = e.target.dataset.id;
+  const result = await post.getPostToEdit(idPost);
   console.log(result);
+  const managePost = e.target.shadowRoot.querySelector("edit-delete-post");
+  console.log(managePost.shadowRoot.querySelector(".optionsHide"));
+  // const managePost = document.querySelector("edit-delete-post");
+  const containerMenu = managePost.shadowRoot.querySelector(".optionsHide");
+  containerMenu.classList.remove("visible");
 };
 
 const printPost = () => {
@@ -256,9 +275,11 @@ const printPost = () => {
         );
         containerPostShadow.appendChild(managePost);
         const updatePost = managePost.shadowRoot.querySelector("#edit");
+        const deletePost = managePost.shadowRoot.querySelector("#delete");
         updatePost.dataset.id = doc.id;
-        console.log(doc.id);
+        deletePost.dataset.id = doc.id;
         updatePost.addEventListener("click", editPost);
+        deletePost.addEventListener("click", deletePosts);
       }
     });
   });
