@@ -25,9 +25,40 @@ const auth = () => ({
     }
   }),
 
+  createUserWithEmailAndPassword: (email, password) => new Promise((resolve) => {
+    resolve({
+      user: {
+        displayName: "",
+        updateProfile(objectName) {
+          this.displayName = objectName.displayName;
+          return `se registro a  ${objectName.displayName}`;
+        },
+        sendEmailVerification: (objCfg) => "se  ha enviado tu correo",
+      },
+    });
+  }),
+
+  signInWithPopup: () => new Promise((resolve) => {
+    resolve({
+      user: {
+        displayName: "usuario de google",
+      },
+    });
+  }),
+
+  sendPasswordResetEmail:(email) => new Promise((resolve) => {
+    resolve("Correo enviado");
+  }),
+
   signOut: () => new Promise((resolve) => {
     resolve("sesion cerrada");
   }),
+
+  currentUser: {
+    displayName: "alejandra",
+    photoUrl: null,
+    uid: "Sef0Hp71o2RoAnjkSBsJLJkBpeB3",
+  },
 });
 
 const firebase = {

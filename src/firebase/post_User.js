@@ -1,25 +1,20 @@
+/* eslint-disable no-undef */
 /* eslint-disable class-methods-use-this */
-const db = firebase.firestore();
-export class AdminPost {
-  constructor() {
-    const settings = { timestampsInSnapshots: true };
-    db.settings(settings);
-  }
 
-  savePost(description) {
-    const user = firebase.auth().currentUser;
+export class AdminPost {
+  savePost(description, user) {
     let name;
-    let photoUrl;
+    let photoURL;
     let uid;
-    if (user != null) {
+    if (user !== null) {
       name = user.displayName;
-      photoUrl = user.photoURL;
+      photoURL = user.photoURL;
       uid = user.uid;
     }
     return db.collection("posts").add({
       description,
       name,
-      photoUrl,
+      photoURL,
       uid,
       date: Date.now(),
     });
@@ -35,10 +30,10 @@ export class AdminPost {
   }
 
   updatePost(objectRef, id) {
-    db.collection("posts").doc(id).update(objectRef);
+    return db.collection("posts").doc(id).update(objectRef).then(() => "post editado");
   }
 
   deletePost(id) {
-    db.collection("posts").doc(id).delete();
+    return db.collection("posts").doc(id).delete().then(() => "post eliminado");
   }
 }

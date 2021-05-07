@@ -6,7 +6,6 @@ export class AutenticationFirebase {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then((result) => {
-          console.log(result);
           if (result.user.emailVerified) {
             // ('avatar').attr('src', 'imagenes/usuario_auth.png');
             resolve(`Bienvenido ${result.user.displayName}`);
@@ -37,18 +36,20 @@ export class AutenticationFirebase {
       url: "http://localhost:5000/",
     };
     await result.user.sendEmailVerification(configuracion);
-    return name;
+    console.log(result.user);
+    return result.user.displayName;
   }
 
-  authCuentaGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-
-    firebase
+  authCuentaGoogle(provider) {
+    // const provider = new firebase.auth.GoogleAuthProvider();
+    // console.log(provider);
+    return firebase
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
         //  $("#avatar").attr("src", result.user.photoURL);
         console.log(`Bienvenido ${result.user.displayName} !! `);
+        return `Bienvenido ${result.user.displayName} !! `;
       });
   }
 
@@ -58,25 +59,9 @@ export class AutenticationFirebase {
   }
 
   signOutSesion() {
-    firebase
+    return firebase
       .auth()
       .signOut()
-      .then(() => {
-        console.log("sesion cerrada");
-      })
-      .catch((error) => {
-        console.error(error);
-        console.log(`No se puede  cerrar sesion: ${error} `);
-      });
-  }
-
-  vericateAuth() {
-    const verification = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        return true;
-      }
-      return false;
-    });
-    console.log(verification);
+      .then(() => "sesion cerrada");
   }
 }

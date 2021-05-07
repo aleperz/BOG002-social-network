@@ -26,7 +26,7 @@ export class DataPost extends HTMLElement {
     <div class="container-message-like">
       <p class="description"></p>
       <div class="container-like-com">
-        <div class="like">like</div>
+      <btn-like></btn-like>
         <div class="coment">coment</div>
       </div>
     </div>
@@ -82,6 +82,7 @@ export class DataPost extends HTMLElement {
       }
 
       .container-message-like {
+        position:relative;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: max-content;
@@ -111,10 +112,6 @@ export class DataPost extends HTMLElement {
       .coment { 
         grid-area: coment; 
       }
-
-      @media screen and (min-width: 900px) {
-        
-        } 
       
     </style>`;
   }

@@ -10,14 +10,17 @@ import { BarNavegation } from "./components/bar_navegation.js";
 import { ModalPost } from "./components/modal_post.js";
 import { BtnOpenModal } from "./components/btn_open_modal.js";
 import { DataPost } from "./components/data_post.js";
+import { BtnLike } from "./components/like.js";
 import { EditDeletePost } from "./components/edit_delete_post.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 import { AdminPost } from "./firebase/post_User.js";
+import { LikeUser } from "./firebase/like_User.js";
 import { messages } from "./views_templates/settings.js";
 
 const router = new Router(routes);
 const auth = new AutenticationFirebase();
 const post = new AdminPost();
+const like = new LikeUser();
 
 customElements.define("button-view", ViewButton);
 customElements.define("input-group", InputGroup);
@@ -30,6 +33,7 @@ customElements.define("modal-post", ModalPost);
 customElements.define("open-modal", BtnOpenModal);
 customElements.define("data-post", DataPost);
 customElements.define("edit-delete-post", EditDeletePost);
+customElements.define("btn-like", BtnLike);
 let editStatusPost = false;
 let idPost = "";
 
@@ -42,8 +46,9 @@ const toHome = () => {
 
 const toLoginGoogle = () => {
   const btnGoogle = document.getElementById("btn-google");
+  const provider = new firebase.auth.GoogleAuthProvider();
   btnGoogle.addEventListener("click", () => {
-    auth.authCuentaGoogle();
+    auth.authCuentaGoogle(provider);
   });
 };
 
@@ -200,12 +205,13 @@ const toSettings = () => {
 };
 
 const newPost = () => {
+  const user = firebase.auth().currentUser;
   const modalPost = document.getElementById("modal-post");
   const divModal = modalPost.shadowRoot.getElementById("modal");
   const btnPosting = modalPost.shadowRoot.querySelector(".primary");
   btnPosting.addEventListener("click", async () => {
     if (!editStatusPost) {
-      await post.savePost(modalPost.value);
+      await post.savePost(modalPost.value, user);
     } else {
       await post.updatePost({ description: modalPost.value }, idPost);
       editStatusPost = false;
@@ -240,6 +246,26 @@ const deletePosts = async (e) => {
   await post.deletePost(idPost);
 };
 
+const giveLike = async (e) => {
+  const btnClass = e.target.classList.contains("active");
+  const idp = e.target.dataset.id;
+  const user = firebase.auth().currentUser;
+  const idUser = user.uid;
+  if (btnClass) await like.saveLike(idp, idUser);
+  else await like.deleteLike(idp, idUser);
+};
+
+const paintLike = async (id, countLike) => {
+  await like.getLike(id, (querySnapshot) => {
+    const likeByPost = [];
+    querySnapshot.forEach((doc) => {
+      likeByPost.push({ ...doc.data() });
+    });
+    const lc = countLike;
+    lc.textContent = likeByPost.length;
+  });
+};
+
 const printPost = () => {
   const containerPost = document.getElementById("container-post");
   const user = firebase.auth().currentUser;
@@ -249,6 +275,10 @@ const printPost = () => {
       const docData = doc.data();
       const elementPost = document.createElement("data-post");
       containerPost.appendChild(elementPost);
+      const likeBtn = elementPost.shadowRoot.querySelector("btn-like").shadowRoot.querySelector(".like");
+      const likeCount = elementPost.shadowRoot.querySelector("btn-like").shadowRoot.querySelector("span");
+      likeBtn.dataset.id = doc.id;
+      likeBtn.addEventListener("click", giveLike);
       const author = elementPost.shadowRoot.querySelector("h3");
       const description = elementPost.shadowRoot.querySelector(".description");
       const date = elementPost.shadowRoot.querySelector(".date");
@@ -270,6 +300,7 @@ const printPost = () => {
         updatePost.addEventListener("click", editPost);
         deletePost.addEventListener("click", deletePosts);
       }
+      paintLike(doc.id, likeCount);
     });
   });
 };
