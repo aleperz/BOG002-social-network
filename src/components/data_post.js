@@ -26,8 +26,9 @@ export class DataPost extends HTMLElement {
     <div class="container-message-like">
       <p class="description"></p>
       <div class="container-like-com">
-      <btn-like></btn-like>
-        <div class="coment">coment</div>
+        <btn-like class="like"></btn-like>
+        <div class="btn-coment"></div>
+        <coment-post class="container-coment none"></coment-post>
       </div>
     </div>
   </div>
@@ -98,10 +99,10 @@ export class DataPost extends HTMLElement {
       .container-like-com {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr;
+        grid-template-rows: max-content;
         grid-template-areas:
-          "like coment";
-        grid-area: container-like-com;        
+        "like btn-coment"
+        "container-coment container-coment";     
         border-top: 1px solid #ccccccad;
         padding-top: 6px;
         justify-items: center;
@@ -109,15 +110,32 @@ export class DataPost extends HTMLElement {
       .like { 
         grid-area: like; 
       }
-      .coment { 
-        grid-area: coment; 
+      .btn-coment { 
+        grid-area: btn-coment; 
+        background-image: url("./img/coment_icon.svg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
       }
-      
+      .container-coment { 
+        grid-area: container-coment; 
+        width: 100%;
+        border-top: 1px solid #ccccccad;        
+      }
+      .none{
+        display: none;
+      }
     </style>`;
   }
 
   render() {
     this.shadowRoot.appendChild(DataPost.getTemplate().content.cloneNode(true));
+    const btnComent = this.shadowRoot.querySelector(".btn-coment");
+    const coments = this.shadowRoot.querySelector("coment-post");
+    btnComent.addEventListener("click", () => coments.classList.toggle("none"));
   }
 
   connectedCallback() {
