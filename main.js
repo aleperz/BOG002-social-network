@@ -12,6 +12,7 @@ import { BtnOpenModal } from "./components/btn_open_modal.js";
 import { DataPost } from "./components/data_post.js";
 import { BtnLike } from "./components/like.js";
 import { EditDeletePost } from "./components/edit_delete_post.js";
+import { ComentsPost } from "./components/coments_post.js";
 import { AutenticationFirebase } from "./firebase/authentication.js";
 import { AdminPost } from "./firebase/post_User.js";
 import { LikeUser } from "./firebase/like_User.js";
@@ -34,6 +35,7 @@ customElements.define("open-modal", BtnOpenModal);
 customElements.define("data-post", DataPost);
 customElements.define("edit-delete-post", EditDeletePost);
 customElements.define("btn-like", BtnLike);
+customElements.define("coment-post", ComentsPost);
 let editStatusPost = false;
 let idPost = "";
 
@@ -255,14 +257,18 @@ const giveLike = async (e) => {
   else await like.deleteLike(idp, idUser);
 };
 
-const paintLike = async (id, countLike) => {
+const paintLike = async (id, countLike, likeBtn) => {
   await like.getLike(id, (querySnapshot) => {
     const likeByPost = [];
+    const user = firebase.auth().currentUser;
     querySnapshot.forEach((doc) => {
       likeByPost.push({ ...doc.data() });
     });
+    const btnl = likeBtn;
     const lc = countLike;
     lc.textContent = likeByPost.length;
+    const likeFound = likeByPost.find((element) => element.idUser === user.uid);
+    if (likeFound) btnl.classList.add("active");
   });
 };
 
@@ -300,7 +306,7 @@ const printPost = () => {
         updatePost.addEventListener("click", editPost);
         deletePost.addEventListener("click", deletePosts);
       }
-      paintLike(doc.id, likeCount);
+      paintLike(doc.id, likeCount, likeBtn);
     });
   });
 };
