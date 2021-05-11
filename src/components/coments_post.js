@@ -53,7 +53,8 @@ export class ComentsPost extends HTMLElement {
           width: 100%;
           position:relative;
           display: flex;
-          justify-content: center;          
+          justify-content: center;  
+          margin-bottom: 1rem;        
         }
 
         input{
@@ -62,6 +63,9 @@ export class ComentsPost extends HTMLElement {
           border-radius: 5px;
           border: 1px solid #c4c4c4;
           box-sizing: border-box;
+        }
+        .messages{
+          width: 100%;
         }
          </style>`;
   }

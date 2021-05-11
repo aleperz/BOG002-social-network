@@ -22,10 +22,21 @@ export class ComentsMessage extends HTMLElement {
   static getStyles() {
     return `
         <style>
+        *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        
         .container-message{
           width: 80%;
           border: 1px solid #c4c4c4;
           border-radius: 5px;
+          margin: auto;
+          margin-bottom: 1rem;
+          background-color: #DFDCDC;
+          padding: 10px;
+      }
         }
 
         
