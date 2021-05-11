@@ -8,7 +8,7 @@ export const register = `
         <hr class="divider"/>
         <input-group type="text" placeholder="Ingrese su nombre" id="name-register"><span slot="title">Nombre:</span></input-group>
         <input-group type="email" placeholder="Ingrese su correo" id="email-register"><span slot="title">Correo electronico:</span></input-group>
-        <input-password id="pass-register"></input-password>
+        <input-password id="pass-register"><span slot="title">Contraseña:</span></input-password>
         <button-action class="primary" id="btn-Register"><span slot="title">Registrate</span></button-action>  
         <button-view id="go-login" class="btn-underline"><span slot="title">¿Ya tienes cuenta? Inicia sesion</span></button-view>
         </div>

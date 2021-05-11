@@ -64,4 +64,25 @@ export class AutenticationFirebase {
       .signOut()
       .then(() => "sesion cerrada");
   }
+
+  async updatePass(newPassword, odlPassword, user) {
+    await this.reauthenticateUser(user, odlPassword);
+    return new Promise((resolve, reject) => {
+      user.updatePassword(newPassword)
+        .then(() => resolve("contraseña actualizada"))
+        .catch((error) => reject(error));
+    });
+  }
+
+  async reauthenticateUser(user, password) {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      password,
+    );
+    await user.reauthenticateWithCredential(credential).then(() => {
+      console.log("reautenticado");
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 }

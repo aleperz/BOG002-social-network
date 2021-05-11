@@ -48,8 +48,8 @@ export const settings = `
    <div class="menu-settings"> 
     <h1>Menu</h1>
     <div class="container-options">  
-        <img src="./img/change_pass.svg">
-        <button-view id="change-pass" class="btn"><span slot="title">Cambiar contraseña</span></button-view>
+        <img src="./img/change_pass.svg" id="img-pass" class="none">
+        <button-view id="change-pass" class="btn none"><span slot="title">Cambiar contraseña</span></button-view>
         <img src="./img/info.svg">
         <button-view id="info" class="btn"><span slot="title">Informacion</span></button-view>
         <img src="./img/signout.svg">

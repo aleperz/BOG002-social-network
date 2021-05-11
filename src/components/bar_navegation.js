@@ -31,9 +31,9 @@ export class BarNavegation extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `
     <nav  class="container-bar">
-    <button class="btn-timeline"></button>
-    <button class="btn-profile"></button>
-    <button class="btn-settings"></button>
+      <button class="btn-timeline"></button>
+      <button class="btn-profile"></button>
+      <button class="btn-settings"></button>
     </nav>
     ${BarNavegation.getStyles()}`;
     return template;

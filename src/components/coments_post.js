@@ -6,16 +6,22 @@ export class ComentsPost extends HTMLElement {
     });
   }
 
+  handleEvent(event) {
+    if (event.type === "cleanContent") {
+      const inputComent = this.shadowRoot.querySelector("input");
+      inputComent.value = "";
+    }
+  }
+
   static getTemplate() {
     const template = document.createElement("template");
     template.innerHTML = `    
     
     <div class="container-coment">
       <div class="container-input">
-        <input>
-        <div class="icon-send"></div>
+        <input><div class="icon-send"></div>
       </div>
-      <div>
+      <div class="messages">
       </div>
     </div>
         ${ComentsPost.getStyles()}`;
@@ -66,5 +72,6 @@ export class ComentsPost extends HTMLElement {
 
   connectedCallback() {
     this.render();
+    document.addEventListener("cleanContent", this);
   }
 }
