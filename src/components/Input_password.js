@@ -19,7 +19,9 @@ export class InputPassword extends HTMLElement {
   getTemplate() {
     const template = document.createElement("template");
     template.innerHTML = `    
-    <label>Contraseña:</label>
+    <label>
+      <slot name="title"></slot>
+      </label>
     <div class="container-input">
         <input type="password" placeholder="Ingrese contraseña" class="input-pass">
         <div class="eye"></div>

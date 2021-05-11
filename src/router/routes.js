@@ -5,11 +5,14 @@ import { resetPass } from '../views_templates/reset_pass.js';
 import { timeline } from "../views_templates/timeline.js";
 import { profile } from "../views_templates/profile.js";
 import { settings } from "../views_templates/settings.js";
+import { updatePass } from "../views_templates/update_pass.js";
+import { info } from "../views_templates/info.js";
+import { error404 } from "../views_templates/error_404.js";
 
 export const routes = [
   {
     path: '#error',
-    template: 'Pagina no encontrada',
+    template: error404,
   },
   {
     path: '#',
@@ -44,6 +47,16 @@ export const routes = [
   {
     path: '#settings',
     template: settings,
+    requireAuth: true,
+  },
+  {
+    path: '#update-pass',
+    template: updatePass,
+    requireAuth: true,
+  },
+  {
+    path: '#info-ecoideate',
+    template: info,
     requireAuth: true,
   },
 ];

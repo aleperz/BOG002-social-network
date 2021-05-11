@@ -47,6 +47,16 @@ export class ViewButton extends HTMLElement {
       font-family: "Roboto", sans-serif;
       font-size: 1rem
     }
+
+    .btn-link{
+      border: none;
+      text-decoration: underline;
+      background: none;
+      cursor: pointer;
+      font-family: "Shadows Into Light Two", cursive;
+      font-size: 1.5rem;
+      width: 100%;
+    }
     
  
     </style>`;

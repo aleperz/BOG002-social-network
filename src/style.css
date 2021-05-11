@@ -133,6 +133,10 @@ section.resetpass-container h2 {
   margin-top: 4rem;
 }
 
+section.resetpass-container input-password  {
+  margin: 2rem 0 1.5rem 0;
+}
+
 notification-toast > img {
   margin: 1rem;
 }
@@ -179,6 +183,17 @@ div.menu-settings h1 {
   margin: 52.7px 0 50px 0;
 }
 
+.sitie-construction{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--green1);
+}
+
+.sitie-construction img{
+  width: 80%;
+  max-width: 500px;
+}
 .container-posts {
   display: grid;
   grid-template-columns: repeat(auto-fill, 300px);
@@ -192,6 +207,83 @@ div.menu-settings h1 {
 .panel-img {
   display: none;
 }
+
+.info-container{
+  margin: 53px 0 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+section.info-container h2{
+  text-align: center;
+  color: var(--green1);
+  margin: 2rem 0;
+}
+
+section.info-container p{
+  text-align: center;
+  color: #333;
+  max-width: 400px;
+}
+
+.container-about{
+  width: 100%;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container-dev{
+  width: 100%;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.container-dev div{
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  align-items: center;
+  grid-template-areas:
+    "img button-view button-view";
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  
+}
+
+div.container-dev img{
+  width: 100px;
+  border: solid 1px #c4c4c4;
+  filter:drop-shadow(0 12px 24px rgba(0,0,0,.35));
+  border-radius: 50px;
+  margin-right: 1rem;
+  grid-area: img;
+}
+
+div.container-dev button-view{
+  grid-area: button-view;
+  width: 100%
+}
+
+.container-404{
+  color: #4b761f;
+  text-align: center;
+}
+
+.container-404 img{
+  width: 70%;
+  max-width: 400px;
+  margin-top: 80px;
+}
+
+.none{
+  display: none;
+}
+
+
 
 @media screen and (min-width: 540px) {
   .home-container {
@@ -348,4 +440,22 @@ div.menu-settings h1 {
   div.panel-img img {
     width: 100%;
   }
+
+  .info-container{
+    margin: 53px 0 0 100px;
+    flex-direction: row;  
+    align-items: flex-start;  
+  }
+  .container-about{
+    width: 50%;
+  }
+  
+  .container-dev{
+    width: 50%;  
+  }
+  
+  .sitie-construction{
+    margin-left: 300px;
+  }
+
 }

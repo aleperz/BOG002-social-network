@@ -46,7 +46,7 @@ export class NotificacionToast extends HTMLElement {
         position: fixed;
         z-index: 1; 
         left: 6%; 
-        bottom: 80%;
+        bottom: 70%;
         box-shadow: rgb(0 0 0 / 20%) 0 0 10px;
         width: 340px;
       }
@@ -79,12 +79,12 @@ export class NotificacionToast extends HTMLElement {
       
         @-webkit-keyframes fadein {
         from {bottom: 0; opacity: 0;}
-        to {bottom: 80%; opacity: 1;}
+        to {bottom: 70%; opacity: 1;}
       }
       
       @keyframes fadein {
         from {bottom: 0; opacity: 0;}
-        to {bottom: 80%; opacity: 1;}
+        to {bottom: 70%; opacity: 1;}
       }
       
       .close{

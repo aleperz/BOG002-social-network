@@ -7,7 +7,7 @@ export const login = `
      <button-action class="secondary" id="btn-google"><img src="./img/google-icon.svg" style="width: 20px; margin-right: 5px;" slot="image"/><span slot="title">Continuar con Google</span></button-action> 
      <hr class="divider"/>
      <input-group type="email" placeholder="Ingrese su correo" id="email-login" class="x"><span slot="title">Correo electronico:</span></input-group>
-     <input-password id="pass-login"></input-password>
+     <input-password id="pass-login"><span slot="title">Contraseña:</span></input-password>
      <label><input type="checkbox"> Recuerdame </label>
      <button-action class="primary" id="btn-login"><span slot="title">Iniciar sesion</span></button-action>  
      <button-view id="go-register" class="btn-underline"><span slot="title">¿No tienes cuenta?Registrate</span></button-view>

@@ -11,6 +11,7 @@ export class Router {
   onRouteChange() {
     const hashLocation = window.location.hash.substring(1);
     this.loadRoute(hashLocation);
+    console.log(hashLocation);
   }
 
   matchUrlToRoute(urlSeg) {
