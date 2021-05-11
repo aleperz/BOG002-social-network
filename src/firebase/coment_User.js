@@ -6,7 +6,7 @@ export class ComentUser {
       idPost,
       author,
       description,
-      date: new Date(),
+      date: Date.now(),
     });
   }
 
