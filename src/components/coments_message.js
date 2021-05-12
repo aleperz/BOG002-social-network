@@ -34,9 +34,21 @@ export class ComentsMessage extends HTMLElement {
           border-radius: 5px;
           margin: auto;
           margin-bottom: 1rem;
-          background-color: #DFDCDC;
+          background-color: #efeded;
           padding: 10px;
-      }
+        }
+        .name{
+          font-weight: bolder;
+          font-size: 1rem;
+          text-transform: capitalize;
+        }
+        .date{
+          color: #6f6f6f;
+          font-size: 11px;
+        }
+        .description{
+          color: #333;
+          margin-top: 8px;
         }
 
         

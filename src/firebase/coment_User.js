@@ -11,6 +11,6 @@ export class ComentUser {
   }
 
   getComents(idpost, callback) {
-    return db.collection("coments").where("idPost", "==", idpost).onSnapshot(callback);
+    return db.collection("coments").where("idPost", "==", idpost).orderBy("date", "desc").onSnapshot(callback);
   }
 }

@@ -9,6 +9,8 @@ export class ComentsPost extends HTMLElement {
   handleEvent(event) {
     if (event.type === "cleanContent") {
       const inputComent = this.shadowRoot.querySelector("input");
+      const btnComent = this.shadowRoot.getElementById("btn-coment");
+      btnComent.classList.toggle("none");
       inputComent.value = "";
     }
   }
@@ -19,7 +21,7 @@ export class ComentsPost extends HTMLElement {
     
     <div class="container-coment">
       <div class="container-input">
-        <input><div class="icon-send"></div>
+        <input placeholder="Escribe tu comentario..."><div id="btn-coment" class="icon-send none"></div>
       </div>
       <div class="messages">
       </div>
@@ -67,11 +69,21 @@ export class ComentsPost extends HTMLElement {
         .messages{
           width: 100%;
         }
+        .none{
+          display:none;
+        }
          </style>`;
   }
 
   render() {
     this.shadowRoot.appendChild(ComentsPost.getTemplate().content.cloneNode(true));
+    const input = this.shadowRoot.querySelector("input");
+    const btnComent = this.shadowRoot.getElementById("btn-coment");
+    input.addEventListener("input", () => {
+      const inpuntLength = input.value.trim().length;
+      if (inpuntLength) btnComent.classList.remove("none");
+      else btnComent.classList.add("none");
+    });
   }
 
   connectedCallback() {

@@ -48,7 +48,7 @@ export class DataPost extends HTMLElement {
           "photo container-name-date container-name-date container-name-date container-name-date"
           "container-message-like container-message-like container-message-like container-message-like container-message-like";
         width: 100%;
-        max-width: 350px;
+        max-width: 600px;
         background: white;
         border-radius: 10px;
         padding: 10px;
@@ -58,7 +58,8 @@ export class DataPost extends HTMLElement {
       }
       .photo { 
         grid-area: photo; 
-        width: 50px;        
+        width: 50px;  
+        border-radius: 10px;      
       }
       .container-name-date {
         display: grid;
@@ -73,6 +74,7 @@ export class DataPost extends HTMLElement {
         grid-area: name; 
         margin: 7px 0 0 0;
         color: #2b5203;
+        text-transform: capitalize;
     }
     
       .date { 

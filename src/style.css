@@ -196,7 +196,7 @@ div.menu-settings h1 {
 }
 .container-posts {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 300px);
+  grid-template-columns: 1;
   grid-gap: 20px;
   justify-content: center;
   margin: auto;
