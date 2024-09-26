@@ -33,6 +33,16 @@ customElements.define("btn-like", BtnLike);
 customElements.define("coment-post", ComentsPost);
 customElements.define("coment-message", ComentsMessage);
 
+// const mansoryGrid = () => {
+//   const elem = document.querySelector('.container-posts');
+//   console.log(elem);
+//   const msnry = new Masonry(elem, {
+//   // options
+//     itemSelector: '.itemPost',
+//     columnWidth: 200,
+//   });
+// };
+
 const toVerificateRoute = (currentRoute) => {
   switch (currentRoute) {
     case "#login":
@@ -54,6 +64,7 @@ const toVerificateRoute = (currentRoute) => {
       changeViewBarNavegation();
       newPost();
       printPost();
+      // mansoryGrid();
       break;
     case "#profile":
       changeViewBarNavegation();

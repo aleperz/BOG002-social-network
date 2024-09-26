@@ -11,7 +11,6 @@ export class Router {
   onRouteChange() {
     const hashLocation = window.location.hash.substring(1);
     this.loadRoute(hashLocation);
-    console.log(hashLocation);
   }
 
   matchUrlToRoute(urlSeg) {
@@ -36,8 +35,6 @@ export class Router {
 
       const url = matchedRoute.path;
       window.history.pushState({}, "done", url);
-      // console.log(url);
-
       this.mainContainer.innerHTML = matchedRoute.template;
     });
   }

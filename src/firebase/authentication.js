@@ -7,7 +7,6 @@ export class AutenticationFirebase {
         .signInWithEmailAndPassword(email, password)
         .then((result) => {
           if (result.user.emailVerified) {
-            // ('avatar').attr('src', 'imagenes/usuario_auth.png');
             resolve(`Bienvenido ${result.user.displayName}`);
           } else {
             firebase.auth().signOut();
@@ -36,18 +35,14 @@ export class AutenticationFirebase {
       url: "http://localhost:5000/",
     };
     await result.user.sendEmailVerification(configuracion);
-    console.log(result.user);
     return result.user.displayName;
   }
 
   authCuentaGoogle(provider) {
-    // const provider = new firebase.auth.GoogleAuthProvider();
-    // console.log(provider);
     return firebase
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        //  $("#avatar").attr("src", result.user.photoURL);
         console.log(`Bienvenido ${result.user.displayName} !! `);
         return `Bienvenido ${result.user.displayName} !! `;
       });

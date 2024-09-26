@@ -12,7 +12,7 @@ export class Header extends HTMLElement {
     template.innerHTML = `
     <header class="header">
     <img src="./img/logo.svg" class="logo">
-      <h1>EcoIdeate</h1>      
+      <h1>EcoIdéate</h1>      
     </header>   
     ${Header.getStyles()}`;
     return template;

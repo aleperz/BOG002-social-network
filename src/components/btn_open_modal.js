@@ -19,7 +19,7 @@ export class BtnOpenModal extends HTMLElement {
   static getTemplate() {
     const template = document.createElement("template");
     template.innerHTML = `    
-    <button>+</button>
+    <button></button>
     <p>-</p>
         ${BtnOpenModal.getStyles()}`;
     return template;
@@ -29,10 +29,14 @@ export class BtnOpenModal extends HTMLElement {
     return `
         <style>
       button{
+        background-image: url(./img/new-post.svg);
+        background-size: 40px;
+        background-position: center;
+        background-repeat: no-repeat; 
         background-color: #4B761F;
         border-radius: 100%;
-        width: 44px;
-        height: 44px;
+        width: 60px;
+        height: 60px;
         border: none;
         filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
         color: white;
@@ -41,6 +45,19 @@ export class BtnOpenModal extends HTMLElement {
         right: 24px;
         bottom: 114px;
         cursor: pointer;
+      }
+
+      button:hover:after {
+        position: absolute;
+        padding: 0.3rem;
+        background-color: hsl(0deg 0% 6%);
+        content: "Nueva publicación";
+        top: 22px;
+        right: 62px;
+        border-radius: 3px;
+        opacity: 0.6;
+        font-size: 12px;
+        width: 100px;
       }
 
       @media screen and (min-width: 900px) {

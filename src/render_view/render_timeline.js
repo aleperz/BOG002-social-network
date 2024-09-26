@@ -87,12 +87,13 @@ const comentSave = async (e) => {
 };
 
 const printComents = async (idP, contComent) => {
+  const containerComent = contComent;
   await coment.getComents(idP, (querySnapshot) => {
+    containerComent.innerHTML = "";
     querySnapshot.forEach((doc) => {
       const docData = doc.data();
       const comentUser = document.createElement("coment-message");
-      contComent.appendChild(comentUser);
-      console.log(coment);
+      containerComent.appendChild(comentUser);
       const author = comentUser.shadowRoot.querySelector(".name");
       const date = comentUser.shadowRoot.querySelector(".date");
       const description = comentUser.shadowRoot.querySelector(".description");
@@ -111,6 +112,7 @@ export const printPost = () => {
     querySnapshot.forEach((doc) => {
       const docData = doc.data();
       const elementPost = document.createElement("data-post");
+      elementPost.classList.add("itemPost");
       containerPost.appendChild(elementPost);
       const likeBtn = elementPost.shadowRoot.querySelector("btn-like").shadowRoot.querySelector(".like");
       const likeCount = elementPost.shadowRoot.querySelector("btn-like").shadowRoot.querySelector("span");
@@ -119,7 +121,6 @@ export const printPost = () => {
       const btnComent = elementPost.shadowRoot.querySelector("coment-post").shadowRoot.querySelector(".icon-send");
       btnComent.dataset.id = doc.id;
       btnComent.addEventListener("click", comentSave);
-      console.log(elementPost.shadowRoot.querySelector("coment-post").shadowRoot.querySelector(".messages"));
       const contComent = elementPost.shadowRoot.querySelector("coment-post").shadowRoot.querySelector(".messages");
       const author = elementPost.shadowRoot.querySelector("h3");
       const description = elementPost.shadowRoot.querySelector(".description");
@@ -128,7 +129,7 @@ export const printPost = () => {
       author.textContent = docData.name;
       description.textContent = docData.description;
       date.textContent = getDatePost(docData.date);
-      photo.src = "./img/user.svg";
+      photo.src = docData.photoURL || "./img/user.svg";
       if (docData.uid === user.uid) {
         const managePost = document.createElement("edit-delete-post");
         const containerPostShadow = elementPost.shadowRoot.querySelector(
